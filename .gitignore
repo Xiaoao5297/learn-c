@@ -1,0 +1,8 @@
+# 示例编译产物
+examples/build/
+
+# Node.js（markdownlint 本地运行）
+node_modules/
+
+# Python 缓存
+__pycache__/
