@@ -97,6 +97,7 @@ def run_example(binary: Path, stdin_text: str | None) -> subprocess.CompletedPro
         capture_output=True,
         timeout=3,
         check=False,
+        cwd=binary.parent,
     )
 
 

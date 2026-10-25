@@ -33,14 +33,15 @@ make -C examples clean
 
 ## 示例总览
 
-共 **89** 个示例，分布在 **4** 个章节。
+共 **127** 个示例，分布在 **5** 个章节。
 
 | 章节 | 示例数 |
 |------|--------|
 | 第 1 章：认识 C 语言 | 17 |
 | 第 2 章：运算符、条件、循环与函数 | 38 |
 | 第 3 章：数组与字符串 | 33 |
-| 第 4 章：指针与结构体 | 1 |
+| 第 4 章：指针与结构体 | 25 |
+| 第 5 章：文件读写与实战 | 14 |
 
 ## 第 1 章：认识 C 语言
 
@@ -149,7 +150,50 @@ make -C examples clean
 
 | 文件 | 编号 | 出处 |
 |------|------|------|
+| [4.1.1_first_pointer.c](chapter4/4.1.1_first_pointer.c) | 4.1.1 | [4.1.1 取地址和解引用](<../chapter4/sections/4.1 指针基础.md>) |
+| [4.1.2_swap.c](chapter4/4.1.2_swap.c) | 4.1.2 | [4.1.2 用指针交换两个变量](<../chapter4/sections/4.1 指针基础.md>) |
+| [4.1.3_pointer_size.c](chapter4/4.1.3_pointer_size.c) | 4.1.3 | [4.1.3 指针的大小和类型](<../chapter4/sections/4.1 指针基础.md>) |
+| [4.1.4_null_pointer.c](chapter4/4.1.4_null_pointer.c) | 4.1.4 | [4.1.4 NULL：空指针](<../chapter4/sections/4.1 指针基础.md>) |
+| [4.2.1_array_decay.c](chapter4/4.2.1_array_decay.c) | 4.2.1 | [4.2.1 数组名的自动转换](<../chapter4/sections/4.2 指针与数组.md>) |
+| [4.2.2_pointer_arith.c](chapter4/4.2.2_pointer_arith.c) | 4.2.2 | [4.2.2 指针算术](<../chapter4/sections/4.2 指针与数组.md>) |
+| [4.2.3_index_equivalence.c](chapter4/4.2.3_index_equivalence.c) | 4.2.3 | [4.2.3 arr\[i\] 就是 (arr + i)](<../chapter4/sections/4.2 指针与数组.md>) |
+| [4.2.4_array_param.c](chapter4/4.2.4_array_param.c) | 4.2.4 | [4.2.4 数组作为函数参数](<../chapter4/sections/4.2 指针与数组.md>) |
+| [4.3.1_char_star_string.c](chapter4/4.3.1_char_star_string.c) | 4.3.1 | [4.3.1 char 与字符串字面量](<../chapter4/sections/4.3 指针与字符串.md>) |
+| [4.3.2_my_strlen.c](chapter4/4.3.2_my_strlen.c) | 4.3.2 | [4.3.2 遍历字符串：以 '\\0' 为终点](<../chapter4/sections/4.3 指针与字符串.md>) |
+| [4.3.3_string_modify.c](chapter4/4.3.3_string_modify.c) | 4.3.3 | [4.3.3 能修改的字符串和只读的字符串](<../chapter4/sections/4.3 指针与字符串.md>) |
+| [4.3.4_vowel_count.c](chapter4/4.3.4_vowel_count.c) | 4.3.4 | [4.3.4 综合示例：统计元音字母](<../chapter4/sections/4.3 指针与字符串.md>) |
+| [4.4.1_struct_basic.c](chapter4/4.4.1_struct_basic.c) | 4.4.1 | [4.4.1 定义和使用结构体](<../chapter4/sections/4.4 结构体.md>) |
+| [4.4.2_struct_array.c](chapter4/4.4.2_struct_array.c) | 4.4.2 | [4.4.2 结构体数组](<../chapter4/sections/4.4 结构体.md>) |
+| [4.4.3_struct_nested.c](chapter4/4.4.3_struct_nested.c) | 4.4.3 | [4.4.3 嵌套结构体](<../chapter4/sections/4.4 结构体.md>) |
+| [4.4.4_struct_assign.c](chapter4/4.4.4_struct_assign.c) | 4.4.4 | [4.4.4 结构体赋值：整包复制](<../chapter4/sections/4.4 结构体.md>) |
+| [4.5.1_arrow_operator.c](chapter4/4.5.1_arrow_operator.c) | 4.5.1 | [4.5.1 箭头运算符 -](<../chapter4/sections/4.5 结构体与指针.md>) |
+| [4.5.2_struct_param.c](chapter4/4.5.2_struct_param.c) | 4.5.2 | [4.5.2 函数传结构体：传值还是传指针](<../chapter4/sections/4.5 结构体与指针.md>) |
+| [4.5.3_struct_array_ptr.c](chapter4/4.5.3_struct_array_ptr.c) | 4.5.3 | [4.5.3 用指针遍历结构体数组](<../chapter4/sections/4.5 结构体与指针.md>) |
+| [4.5.4_top_student.c](chapter4/4.5.4_top_student.c) | 4.5.4 | [4.5.4 综合示例：找出最高分学生](<../chapter4/sections/4.5 结构体与指针.md>) |
+| [4.6.1_const_pointer.c](chapter4/4.6.1_const_pointer.c) | 4.6.1 | [4.6.1 const 与指针的四种组合](<../chapter4/sections/4.6 const 与多级指针.md>) |
+| [4.6.2_void_pointer.c](chapter4/4.6.2_void_pointer.c) | 4.6.2 | [4.6.2 void ：万能指针](<../chapter4/sections/4.6 const 与多级指针.md>) |
+| [4.6.3_double_pointer.c](chapter4/4.6.3_double_pointer.c) | 4.6.3 | [4.6.3 二级指针](<../chapter4/sections/4.6 const 与多级指针.md>) |
+| [4.6.4_redirect_pointer.c](chapter4/4.6.4_redirect_pointer.c) | 4.6.4 | [4.6.3 二级指针](<../chapter4/sections/4.6 const 与多级指针.md>) |
 | [4.7.1_student_manager_single.c](chapter4/4.7.1_student_manager_single.c) | 4.7.1 | [4.7.2 先看一个单文件版本](<../chapter4/sections/4.7 多文件工程与 Makefile.md>) |
+
+## 第 5 章：文件读写与实战
+
+| 文件 | 编号 | 出处 |
+|------|------|------|
+| [5.1.1_first_write.c](chapter5/5.1.1_first_write.c) | 5.1.1 | [5.1.2 打开与关闭：fopen 和 fclose](<../chapter5/sections/5.1 文件与 FILE.md>) |
+| [5.1.2_open_fail.c](chapter5/5.1.2_open_fail.c) | 5.1.2 | [5.1.3 打开失败：永远检查 NULL](<../chapter5/sections/5.1 文件与 FILE.md>) |
+| [5.1.3_modes_demo.c](chapter5/5.1.3_modes_demo.c) | 5.1.3 | [5.1.4 打开模式：r、w、a 和带 + 的模式](<../chapter5/sections/5.1 文件与 FILE.md>) |
+| [5.2.1_fprintf_fscanf.c](chapter5/5.2.1_fprintf_fscanf.c) | 5.2.1 | [5.2.1 fprintf 和 fscanf：带格式的读写](<../chapter5/sections/5.2 读写文件.md>) |
+| [5.2.2_fgetc_count.c](chapter5/5.2.2_fgetc_count.c) | 5.2.2 | [5.2.2 fgetc 和 fputc：一个字符一个字符处理](<../chapter5/sections/5.2 读写文件.md>) |
+| [5.2.3_copy_file.c](chapter5/5.2.3_copy_file.c) | 5.2.3 | [5.2.3 综合示例：复制文件](<../chapter5/sections/5.2 读写文件.md>) |
+| [5.3.1_fgets_lines.c](chapter5/5.3.1_fgets_lines.c) | 5.3.1 | [5.3.1 fgets：从文件读一行](<../chapter5/sections/5.3 行读写与安全输入.md>) |
+| [5.3.2_strip_newline.c](chapter5/5.3.2_strip_newline.c) | 5.3.2 | [5.3.2 处理 fgets 保留的换行符](<../chapter5/sections/5.3 行读写与安全输入.md>) |
+| [5.3.3_fputs_write.c](chapter5/5.3.3_fputs_write.c) | 5.3.3 | [5.3.3 fputs：往文件写一行](<../chapter5/sections/5.3 行读写与安全输入.md>) |
+| [5.4.1_fseek_ftell.c](chapter5/5.4.1_fseek_ftell.c) | 5.4.1 | [5.4.1 文件位置：ftell、fseek、rewind](<../chapter5/sections/5.4 文件定位与二进制.md>) |
+| [5.4.2_fwrite_fread.c](chapter5/5.4.2_fwrite_fread.c) | 5.4.2 | [5.4.3 fwrite 和 fread：整块读写](<../chapter5/sections/5.4 文件定位与二进制.md>) |
+| [5.5.1_contact_save_load.c](chapter5/5.5.1_contact_save_load.c) | 5.5.1 | [5.5.2 保存与加载的完整实现](<../chapter5/sections/5.5 综合项目：通讯录存盘.md>) |
+| [5.5.2_bad_count.c](chapter5/5.5.2_bad_count.c) | 5.5.2 | [5.5.6 眼见为实：被篡改的文件头](<../chapter5/sections/5.5 综合项目：通讯录存盘.md>) |
+| [5.5.3_contact_add.c](chapter5/5.5.3_contact_add.c) | 5.5.3 | [5.5.7 添加联系人：一个能交互的小工具](<../chapter5/sections/5.5 综合项目：通讯录存盘.md>) |
 
 ---
 
