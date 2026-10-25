@@ -75,7 +75,7 @@
 - 一个文本编辑器。VS Code 可以，系统自带的编辑器也可以。
 - 一个终端。Linux 用系统终端，Windows 用 PowerShell、CMD 或 Windows Terminal。
 
-具体安装步骤见 [1.2 安装 C 开发环境](chapter1/sections/1.2_install_c_environment.md)。
+具体安装步骤见 [1.2 搭建开发环境](<chapter1/sections/1.2 搭建开发环境.md>)。
 
 ## 仓库结构
 

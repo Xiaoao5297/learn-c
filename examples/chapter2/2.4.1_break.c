@@ -5,7 +5,7 @@
  * 编译运行：cc -std=c11 -Wall -Wextra -pedantic 2.4.1_break.c -o demo
  *
  * 预期输出：
- *   1 2 3 4
+ *   1 2 3 4 
  *   循环结束
  *
  * 本文件由 scripts/extract_examples.py 自动生成。

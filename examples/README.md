@@ -33,12 +33,36 @@ make -C examples clean
 
 ## 示例总览
 
-共 **39** 个示例，分布在 **2** 个章节。
+共 **89** 个示例，分布在 **4** 个章节。
 
 | 章节 | 示例数 |
 |------|--------|
+| 第 1 章：认识 C 语言 | 17 |
 | 第 2 章：运算符、条件、循环与函数 | 38 |
+| 第 3 章：数组与字符串 | 33 |
 | 第 4 章：指针与结构体 | 1 |
+
+## 第 1 章：认识 C 语言
+
+| 文件 | 编号 | 出处 |
+|------|------|------|
+| [1.1.5_hello_preview.c](chapter1/1.1.5_hello_preview.c) | 1.1.5 | [1.1.5 你的第一个程序长什么样](<../chapter1/sections/1.1 C 语言是什么.md>) |
+| [1.3.1_hello.c](chapter1/1.3.1_hello.c) | 1.3.1 | [1.3.1 写出 hello.c](<../chapter1/sections/1.3 第一个 C 程序.md>) |
+| [1.3.3_escape.c](chapter1/1.3.3_escape.c) | 1.3.3 | [1.3.3 转义字符和 \\n](<../chapter1/sections/1.3 第一个 C 程序.md>) |
+| [1.3.4_placeholder.c](chapter1/1.3.4_placeholder.c) | 1.3.4 | [1.3.4 printf 占位符初步](<../chapter1/sections/1.3 第一个 C 程序.md>) |
+| [1.4.2_variables.c](chapter1/1.4.2_variables.c) | 1.4.2 | [1.4.2 声明、赋值和初始化](<../chapter1/sections/1.4 变量与数据类型.md>) |
+| [1.4.3_sizeof_types.c](chapter1/1.4.3_sizeof_types.c) | 1.4.3 | [1.4.3 基本数据类型](<../chapter1/sections/1.4 变量与数据类型.md>) |
+| [1.4.4_printf_formats.c](chapter1/1.4.4_printf_formats.c) | 1.4.4 | [1.4.4 printf 格式符表](<../chapter1/sections/1.4 变量与数据类型.md>) |
+| [1.4.5_constants.c](chapter1/1.4.5_constants.c) | 1.4.5 | [1.4.5 常量](<../chapter1/sections/1.4 变量与数据类型.md>) |
+| [1.4.6_overflow.c](chapter1/1.4.6_overflow.c) | 1.4.6 | [int 的范围与溢出](<../chapter1/sections/1.4 变量与数据类型.md>) |
+| [1.4.7_char_ascii.c](chapter1/1.4.7_char_ascii.c) | 1.4.7 | [char 的真面目：数字](<../chapter1/sections/1.4 变量与数据类型.md>) |
+| [1.5.1_scan_two.c](chapter1/1.5.1_scan_two.c) | 1.5.1 | [1.5.1 scanf 的基本用法](<../chapter1/sections/1.5 scanf 与输入.md>) |
+| [1.5.2_scan_check.c](chapter1/1.5.2_scan_check.c) | 1.5.2 | [1.5.2 必须检查 scanf 的返回值](<../chapter1/sections/1.5 scanf 与输入.md>) |
+| [1.5.3_scan_char_bad.c](chapter1/1.5.3_scan_char_bad.c) | 1.5.3 | [1.5.3 回车残留问题](<../chapter1/sections/1.5 scanf 与输入.md>) |
+| [1.5.4_scan_char.c](chapter1/1.5.4_scan_char.c) | 1.5.4 | [解法二：手动读掉残留的回车](<../chapter1/sections/1.5 scanf 与输入.md>) |
+| [1.5.5_scan_name.c](chapter1/1.5.5_scan_name.c) | 1.5.5 | [完整示例](<../chapter1/sections/1.5 scanf 与输入.md>) |
+| [1.5.6_scan_double.c](chapter1/1.5.6_scan_double.c) | 1.5.6 | [1.5.6 读浮点数](<../chapter1/sections/1.5 scanf 与输入.md>) |
+| [1.5.7_scan_loop.c](chapter1/1.5.7_scan_loop.c) | 1.5.7 | [1.5.7 输入校验：不合法就重来](<../chapter1/sections/1.5 scanf 与输入.md>) |
 
 ## 第 2 章：运算符、条件、循环与函数
 
@@ -82,6 +106,44 @@ make -C examples clean
 | [2.5.7_factorial.c](chapter2/2.5.7_factorial.c) | 2.5.7 | [计算阶乘](<../chapter2/sections/2.5 函数基础.md>) |
 | [2.5.8_temperature.c](chapter2/2.5.8_temperature.c) | 2.5.8 | [温度转换](<../chapter2/sections/2.5 函数基础.md>) |
 | [2.5.9_calculator.c](chapter2/2.5.9_calculator.c) | 2.5.9 | [2.5.8 综合示例：简易计算器](<../chapter2/sections/2.5 函数基础.md>) |
+
+## 第 3 章：数组与字符串
+
+| 文件 | 编号 | 出处 |
+|------|------|------|
+| [3.1.2_array_init.c](chapter3/3.1.2_array_init.c) | 3.1.2 | [3.1.2 声明和初始化数组](<../chapter3/sections/3.1 数组.md>) |
+| [3.1.3_array_access.c](chapter3/3.1.3_array_access.c) | 3.1.3 | [3.1.3 下标：从 0 开始](<../chapter3/sections/3.1 数组.md>) |
+| [3.1.5_array_traverse.c](chapter3/3.1.5_array_traverse.c) | 3.1.5 | [3.1.5 遍历数组](<../chapter3/sections/3.1 数组.md>) |
+| [3.1.6_array_sizeof.c](chapter3/3.1.6_array_sizeof.c) | 3.1.6 | [3.1.6 用 sizeof 计算元素个数](<../chapter3/sections/3.1 数组.md>) |
+| [3.1.8_array_stats.c](chapter3/3.1.8_array_stats.c) | 3.1.8 | [3.1.8 统计：求和、平均分、最值](<../chapter3/sections/3.1 数组.md>) |
+| [3.1.9_array_reverse.c](chapter3/3.1.9_array_reverse.c) | 3.1.9 | [3.1.9 逆序输出](<../chapter3/sections/3.1 数组.md>) |
+| [3.1.10_array_palindrome.c](chapter3/3.1.10_array_palindrome.c) | 3.1.10 | [3.1.10 判断回文](<../chapter3/sections/3.1 数组.md>) |
+| [3.2.2_matrix_init.c](chapter3/3.2.2_matrix_init.c) | 3.2.2 | [3.2.2 初始化二维数组](<../chapter3/sections/3.2 二维数组.md>) |
+| [3.2.4_matrix_macro.c](chapter3/3.2.4_matrix_macro.c) | 3.2.4 | [3.2.4 用宏定义行数和列数](<../chapter3/sections/3.2 二维数组.md>) |
+| [3.2.5_matrix_traverse.c](chapter3/3.2.5_matrix_traverse.c) | 3.2.5 | [3.2.5 嵌套循环遍历](<../chapter3/sections/3.2 二维数组.md>) |
+| [3.2.6_matrix_transpose.c](chapter3/3.2.6_matrix_transpose.c) | 3.2.6 | [3.2.6 例：矩阵转置](<../chapter3/sections/3.2 二维数组.md>) |
+| [3.2.7_matrix_row_sum.c](chapter3/3.2.7_matrix_row_sum.c) | 3.2.7 | [3.2.7 例：按行求和](<../chapter3/sections/3.2 二维数组.md>) |
+| [3.3.2_string_init.c](chapter3/3.3.2_string_init.c) | 3.3.2 | [3.3.2 初始化字符串的几种写法](<../chapter3/sections/3.3 字符串基础.md>) |
+| [3.3.3_sizeof_strlen.c](chapter3/3.3.3_sizeof_strlen.c) | 3.3.3 | [3.3.3 sizeof vs strlen](<../chapter3/sections/3.3 字符串基础.md>) |
+| [3.3.4_scanf_width.c](chapter3/3.3.4_scanf_width.c) | 3.3.4 | [3.3.4 scanf 读字符串：必须限宽](<../chapter3/sections/3.3 字符串基础.md>) |
+| [3.3.5_fgets_demo.c](chapter3/3.3.5_fgets_demo.c) | 3.3.5 | [3.3.5 fgets：推荐的读入方式](<../chapter3/sections/3.3 字符串基础.md>) |
+| [3.3.6_strlen_utf8.c](chapter3/3.3.6_strlen_utf8.c) | 3.3.6 | [3.3.6 中文字符串与编码](<../chapter3/sections/3.3 字符串基础.md>) |
+| [3.4.2_strlen_chars.c](chapter3/3.4.2_strlen_chars.c) | 3.4.2 | [3.4.2 strlen：求长度](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.3_strcpy_demo.c](chapter3/3.4.3_strcpy_demo.c) | 3.4.3 | [3.4.3 strcpy：能复制，但不安全](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.4_strncpy_demo.c](chapter3/3.4.4_strncpy_demo.c) | 3.4.4 | [3.4.4 strncpy：有限复制，有坑](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.5_snprintf_demo.c](chapter3/3.4.5_snprintf_demo.c) | 3.4.5 | [3.4.5 snprintf：推荐的复制方式](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.6_strcat_demo.c](chapter3/3.4.6_strcat_demo.c) | 3.4.6 | [3.4.6 strcat：拼接与它的风险](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.7_strncat_demo.c](chapter3/3.4.7_strncat_demo.c) | 3.4.7 | [3.4.7 strncat：带上限的拼接](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.8_strcmp_demo.c](chapter3/3.4.8_strcmp_demo.c) | 3.4.8 | [3.4.8 strcmp：比较字符串](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.9_strstr_demo.c](chapter3/3.4.9_strstr_demo.c) | 3.4.9 | [3.4.9 strstr：查找子串](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.10_my_strlen.c](chapter3/3.4.10_my_strlen.c) | 3.4.10 | [3.4.10 动手实现 mystrlen](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.4.11_my_strcmp.c](chapter3/3.4.11_my_strcmp.c) | 3.4.11 | [3.4.11 动手实现 mystrcmp](<../chapter3/sections/3.4 字符串函数.md>) |
+| [3.5.1_array_param.c](chapter3/3.5.1_array_param.c) | 3.5.1 | [3.5.1 数组作参数：退化为指针](<../chapter3/sections/3.5 数组与函数.md>) |
+| [3.5.3_array_average.c](chapter3/3.5.3_array_average.c) | 3.5.3 | [3.5.3 一维数组传参示例](<../chapter3/sections/3.5 数组与函数.md>) |
+| [3.5.4_matrix_param.c](chapter3/3.5.4_matrix_param.c) | 3.5.4 | [3.5.4 二维数组传参：列数必须写死](<../chapter3/sections/3.5 数组与函数.md>) |
+| [3.5.5_bubble_sort.c](chapter3/3.5.5_bubble_sort.c) | 3.5.5 | [3.5.5 冒泡排序](<../chapter3/sections/3.5 数组与函数.md>) |
+| [3.5.6_bubble_sort_opt.c](chapter3/3.5.6_bubble_sort_opt.c) | 3.5.6 | [3.5.6 冒泡排序的优化：提前退出](<../chapter3/sections/3.5 数组与函数.md>) |
+| [3.5.7_score_stats.c](chapter3/3.5.7_score_stats.c) | 3.5.7 | [3.5.7 综合示例：成绩统计程序](<../chapter3/sections/3.5 数组与函数.md>) |
 
 ## 第 4 章：指针与结构体
 

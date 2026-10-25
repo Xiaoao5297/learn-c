@@ -4,8 +4,13 @@
 用法：
     python3 scripts/verify_examples.py
 
-需要输入或依赖外部文件的示例，写到 examples/verify_skip.txt，一行一个相对路径。
-被跳过的示例仍然会参与编译，只是不运行、不比对输出。
+需要输入的示例：把输入内容放到 examples/verify_inputs/<文件名>.txt，
+运行时会作为 stdin 喂给程序（例如 examples/chapter1/1.5.1_scan_two.c
+对应 examples/verify_inputs/1.5.1_scan_two.txt）。
+
+仍不适合自动运行（依赖外部文件、真交互等）的示例，写到
+examples/verify_skip.txt，一行一个相对路径。被跳过的示例仍然会参与编译，
+只是不运行、不比对输出。
 """
 
 from __future__ import annotations
@@ -19,6 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 EXAMPLES = ROOT / "examples"
 SKIP_FILE = EXAMPLES / "verify_skip.txt"
+INPUT_DIR = EXAMPLES / "verify_inputs"
 
 
 def read_skip_list() -> set[str]:
@@ -75,6 +81,25 @@ def compile_example(source: Path, binary: Path, compiler: str) -> str | None:
     return result.stderr.strip() or result.stdout.strip() or "编译失败"
 
 
+def read_input(source: Path) -> str | None:
+    """返回喂给示例的 stdin 内容；没有对应的输入文件则返回 None。"""
+    input_file = INPUT_DIR / (source.stem + ".txt")
+    if input_file.exists():
+        return input_file.read_text(encoding="utf-8")
+    return None
+
+
+def run_example(binary: Path, stdin_text: str | None) -> subprocess.CompletedProcess:
+    stdin_data = stdin_text.encode("utf-8") if stdin_text is not None else b""
+    return subprocess.run(
+        [str(binary)],
+        input=stdin_data,
+        capture_output=True,
+        timeout=3,
+        check=False,
+    )
+
+
 def main() -> int:
     compiler = os.environ.get("CC", "cc")
     skipped = read_skip_list()
@@ -105,28 +130,24 @@ def main() -> int:
                 continue
 
             try:
-                result = subprocess.run(
-                    [str(binary)],
-                    capture_output=True,
-                    text=True,
-                    timeout=3,
-                    check=False,
-                )
+                result = run_example(binary, read_input(source))
             except subprocess.TimeoutExpired:
                 failures.append(f"{relative}: 运行超过 3 秒，可能需要输入")
                 continue
 
+            stdout = result.stdout.decode("utf-8", errors="replace")
+            stderr_text = result.stderr.decode("utf-8", errors="replace")
             if result.returncode != 0:
                 failures.append(
-                    f"{relative}: 退出码 {result.returncode}\n{result.stderr.strip()}"
+                    f"{relative}: 退出码 {result.returncode}\n{stderr_text.strip()}"
                 )
                 continue
 
-            if normalize_output(result.stdout) != normalize_output(expected):
+            if normalize_output(stdout) != normalize_output(expected):
                 failures.append(
                     f"{relative}: 输出与教程不一致\n"
                     f"--- 教程 ---\n{expected}"
-                    f"--- 实际 ---\n{result.stdout}"
+                    f"--- 实际 ---\n{stdout}"
                 )
 
     if failures:

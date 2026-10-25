@@ -94,7 +94,11 @@ def nearest_heading(text: str, position: int) -> str:
 
 
 def sanitize_comment(text: str) -> str:
-    return text.replace("*/", "* /").replace("\r", " ").strip()
+    return text.replace("*/", "* /").replace("\r", " ")
+
+
+def sanitize_heading(text: str) -> str:
+    return sanitize_comment(text).strip()
 
 
 def compile_error(code: str, workdir: Path, compiler: str) -> str | None:
@@ -193,7 +197,7 @@ def build_header(example: Example) -> str:
         "/*",
         f" * 教程来源：{example.source_rel}",
         f" * 示例编号：{example.number}",
-        f" * 所在小节：{sanitize_comment(example.heading) or example.title or '（无标题）'}",
+        f" * 所在小节：{sanitize_heading(example.heading) or example.title or '（无标题）'}",
         " * 编译运行：cc -std=c11 -Wall -Wextra -pedantic "
         f"{example.output_file} -o demo",
         " *",
