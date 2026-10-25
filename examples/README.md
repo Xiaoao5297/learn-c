@@ -33,7 +33,7 @@ make -C examples clean
 
 ## 示例总览
 
-共 **127** 个示例，分布在 **5** 个章节。
+共 **166** 个示例，分布在 **8** 个章节。
 
 | 章节 | 示例数 |
 |------|--------|
@@ -42,6 +42,9 @@ make -C examples clean
 | 第 3 章：数组与字符串 | 33 |
 | 第 4 章：指针与结构体 | 25 |
 | 第 5 章：文件读写与实战 | 14 |
+| 第 6 章：动态内存与链表 | 11 |
+| 第 7 章：递归 | 17 |
+| 第 8 章：排序与查找 | 11 |
 
 ## 第 1 章：认识 C 语言
 
@@ -194,6 +197,60 @@ make -C examples clean
 | [5.5.1_contact_save_load.c](chapter5/5.5.1_contact_save_load.c) | 5.5.1 | [5.5.2 保存与加载的完整实现](<../chapter5/sections/5.5 综合项目：通讯录存盘.md>) |
 | [5.5.2_bad_count.c](chapter5/5.5.2_bad_count.c) | 5.5.2 | [5.5.6 眼见为实：被篡改的文件头](<../chapter5/sections/5.5 综合项目：通讯录存盘.md>) |
 | [5.5.3_contact_add.c](chapter5/5.5.3_contact_add.c) | 5.5.3 | [5.5.7 添加联系人：一个能交互的小工具](<../chapter5/sections/5.5 综合项目：通讯录存盘.md>) |
+
+## 第 6 章：动态内存与链表
+
+| 文件 | 编号 | 出处 |
+|------|------|------|
+| [6.1.2_malloc_first.c](chapter6/6.1.2_malloc_first.c) | 6.1.2 | [6.1.2 malloc：申请内存](<../chapter6/sections/6.1 动态内存.md>) |
+| [6.1.4_dynamic_array.c](chapter6/6.1.4_dynamic_array.c) | 6.1.4 | [6.1.4 动态数组：运行时定大小](<../chapter6/sections/6.1 动态内存.md>) |
+| [6.1.5_free_null.c](chapter6/6.1.5_free_null.c) | 6.1.5 | [6.1.5 free：归还内存](<../chapter6/sections/6.1 动态内存.md>) |
+| [6.2.1_calloc_zero.c](chapter6/6.2.1_calloc_zero.c) | 6.2.1 | [6.2.1 calloc：申请并清零](<../chapter6/sections/6.2 内存陷阱.md>) |
+| [6.2.2_realloc_grow.c](chapter6/6.2.2_realloc_grow.c) | 6.2.2 | [6.2.2 realloc：动态扩容](<../chapter6/sections/6.2 内存陷阱.md>) |
+| [6.2.3_auto_grow.c](chapter6/6.2.3_auto_grow.c) | 6.2.3 | [6.2.3 realloc 实战：自动扩容的数组](<../chapter6/sections/6.2 内存陷阱.md>) |
+| [6.3.3_create_node.c](chapter6/6.3.3_create_node.c) | 6.3.3 | [6.3.3 创建节点](<../chapter6/sections/6.3 链表.md>) |
+| [6.3.6_list_basic.c](chapter6/6.3.6_list_basic.c) | 6.3.6 | [6.3.6 遍历：顺着 next 走](<../chapter6/sections/6.3 链表.md>) |
+| [6.4.1_list_find.c](chapter6/6.4.1_list_find.c) | 6.4.1 | [6.4.1 查找](<../chapter6/sections/6.4 链表进阶.md>) |
+| [6.4.3_list_delete.c](chapter6/6.4.3_list_delete.c) | 6.4.3 | [6.4.3 删除的完整演示](<../chapter6/sections/6.4 链表进阶.md>) |
+| [6.4.4_score_list.c](chapter6/6.4.4_score_list.c) | 6.4.4 | [6.4.4 综合项目：成绩单链表](<../chapter6/sections/6.4 链表进阶.md>) |
+
+## 第 7 章：递归
+
+| 文件 | 编号 | 出处 |
+|------|------|------|
+| [7.1.1_countdown.c](chapter7/7.1.1_countdown.c) | 7.1.1 | [7.1.1 第一个递归程序](<../chapter7/sections/7.1 递归入门.md>) |
+| [7.1.3_factorial.c](chapter7/7.1.3_factorial.c) | 7.1.3 | [7.1.3 阶乘：返回值的递归](<../chapter7/sections/7.1 递归入门.md>) |
+| [7.1.4_sum_power.c](chapter7/7.1.4_sum_power.c) | 7.1.4 | [7.1.4 两个基础例：求和与幂](<../chapter7/sections/7.1 递归入门.md>) |
+| [7.2.3_print_order.c](chapter7/7.2.3_print_order.c) | 7.2.3 | [7.2.3 打印放在哪，顺序就反了](<../chapter7/sections/7.2 调用栈与栈溢出.md>) |
+| [7.2.4_digits.c](chapter7/7.2.4_digits.c) | 7.2.4 | [7.2.4 拆数字：各位和与倒序打印](<../chapter7/sections/7.2 调用栈与栈溢出.md>) |
+| [7.2.5_gcd.c](chapter7/7.2.5_gcd.c) | 7.2.5 | [7.2.5 最大公约数：另一条收敛路径](<../chapter7/sections/7.2 调用栈与栈溢出.md>) |
+| [7.3.2_fib_naive.c](chapter7/7.3.2_fib_naive.c) | 7.3.2 | [7.3.2 递归版：照着公式抄](<../chapter7/sections/7.3 斐波那契与递归代价.md>) |
+| [7.3.3_fib_cost.c](chapter7/7.3.3_fib_cost.c) | 7.3.3 | [7.3.3 代价：同一个子问题算了一遍又一遍](<../chapter7/sections/7.3 斐波那契与递归代价.md>) |
+| [7.3.4_fib_memo.c](chapter7/7.3.4_fib_memo.c) | 7.3.4 | [7.3.4 记忆化：算过的存起来](<../chapter7/sections/7.3 斐波那契与递归代价.md>) |
+| [7.3.5_fib_loop.c](chapter7/7.3.5_fib_loop.c) | 7.3.5 | [7.3.5 循环版：从前往后推](<../chapter7/sections/7.3 斐波那契与递归代价.md>) |
+| [7.4.3_hanoi.c](chapter7/7.4.3_hanoi.c) | 7.4.3 | [7.4.3 递归解法](<../chapter7/sections/7.4 汉诺塔与分治.md>) |
+| [7.4.4_hanoi_formula.c](chapter7/7.4.4_hanoi_formula.c) | 7.4.4 | [7.4.4 验证步数公式](<../chapter7/sections/7.4 汉诺塔与分治.md>) |
+| [7.4.5_array_sum.c](chapter7/7.4.5_array_sum.c) | 7.4.5 | [7.4.5 分而治之](<../chapter7/sections/7.4 汉诺塔与分治.md>) |
+| [7.5.2_list_print.c](chapter7/7.5.2_list_print.c) | 7.5.2 | [7.5.2 递归遍历：正序与逆序打印](<../chapter7/sections/7.5 递归操作链表.md>) |
+| [7.5.3_list_stats.c](chapter7/7.5.3_list_stats.c) | 7.5.3 | [7.5.3 计数与求和](<../chapter7/sections/7.5 递归操作链表.md>) |
+| [7.5.4_list_free.c](chapter7/7.5.4_list_free.c) | 7.5.4 | [7.5.4 递归查找与整链释放](<../chapter7/sections/7.5 递归操作链表.md>) |
+| [7.5.5_list_tools.c](chapter7/7.5.5_list_tools.c) | 7.5.5 | [7.5.5 综合实战：递归链表工具箱](<../chapter7/sections/7.5 递归操作链表.md>) |
+
+## 第 8 章：排序与查找
+
+| 文件 | 编号 | 出处 |
+|------|------|------|
+| [8.1.1_bubble_sort.c](chapter8/8.1.1_bubble_sort.c) | 8.1.1 | [8.1.3 基本实现](<../chapter8/sections/8.1 冒泡排序.md>) |
+| [8.1.2_bubble_sort_opt.c](chapter8/8.1.2_bubble_sort_opt.c) | 8.1.2 | [8.1.5 提前退出：swapped 标志](<../chapter8/sections/8.1 冒泡排序.md>) |
+| [8.2.1_selection_sort.c](chapter8/8.2.1_selection_sort.c) | 8.2.1 | [8.2.2 实现](<../chapter8/sections/8.2 选择排序.md>) |
+| [8.2.2_selection_desc.c](chapter8/8.2.2_selection_desc.c) | 8.2.2 | [8.2.4 变一变方向：从大到小](<../chapter8/sections/8.2 选择排序.md>) |
+| [8.3.1_insertion_sort.c](chapter8/8.3.1_insertion_sort.c) | 8.3.1 | [8.3.2 实现](<../chapter8/sections/8.3 插入排序.md>) |
+| [8.4.1_linear_search.c](chapter8/8.4.1_linear_search.c) | 8.4.1 | [8.4.1 线性查找：从头找到尾](<../chapter8/sections/8.4 线性查找与二分查找.md>) |
+| [8.4.2_binary_search.c](chapter8/8.4.2_binary_search.c) | 8.4.2 | [8.4.2 二分查找：每次砍掉一半](<../chapter8/sections/8.4 线性查找与二分查找.md>) |
+| [8.4.3_sort_then_search.c](chapter8/8.4.3_sort_then_search.c) | 8.4.3 | [8.4.4 先排序，再二分：黄金搭档](<../chapter8/sections/8.4 线性查找与二分查找.md>) |
+| [8.5.1_partition.c](chapter8/8.5.1_partition.c) | 8.5.1 | [8.5.2 一趟分区：Lomuto 写法](<../chapter8/sections/8.5 综合项目：快速排序.md>) |
+| [8.5.2_quick_sort.c](chapter8/8.5.2_quick_sort.c) | 8.5.2 | [8.5.3 加上递归，快排完成](<../chapter8/sections/8.5 综合项目：快速排序.md>) |
+| [8.5.3_score_system.c](chapter8/8.5.3_score_system.c) | 8.5.3 | [8.5.6 综合项目：成绩排序加查找小系统](<../chapter8/sections/8.5 综合项目：快速排序.md>) |
 
 ---
 

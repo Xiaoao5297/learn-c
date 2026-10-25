@@ -1,427 +1,376 @@
-# 第6章测试：动态内存与链表
+# 第 6 章测试：动态内存与链表
 
-> 📋 **测试说明：**
-> 
-> - 📝 **选择题（5题）：** 每题考查一个核心概念
-> - 📝 **填空题（5题）：** 考查记忆和理解
-> - 📝 **改错题（1题）：** 考查代码调试能力
-> - 📝 **编程题（3题）：** 考查综合运用能力
-> 
-> 💡 **建议：** 先独立完成后，再对照参考答案检查。
+> **测试说明**
+>
+> - 选择题 5 题，填空题 5 题，阅读程序 2 题，编程题 2 题。
+> - 建议用时 60 到 90 分钟。
+> - 先独立完成，再展开文末答案。
+> - 编程题重点看思路和边界，不要求和参考答案逐字相同。
 
 ---
 
-## 一、选择题（共5题）
+## 一、选择题（每题 2 分，共 10 分）
 
-**1. malloc 申请内存失败时返回：**
+**1. `malloc` 申请内存失败时返回？**
 
-A. `0`  
-B. `-1`  
-C. `NULL`  
-D. 抛出异常
+A. `0`\
+B. `-1`\
+C. `NULL`\
+D. 什么都不返回，程序直接崩溃
 
 ---
 
-**2. 以下代码有什么问题？**
+**2. 下面代码的主要问题是什么？**
 
 ```c
-int *p = (int *)malloc(sizeof(int));
-*p = 10;
-free(p);
-p = NULL;
+for (int i = 0; i < 100000; i++) {
+	int *p = malloc(sizeof(int));
+	if (p == NULL) {
+		return 1;
+	}
+	*p = i;
+}
 ```
 
-A. 内存泄漏  
-B. 双重释放  
-C. 悬垂指针  
-D. 没有明显问题（写法正确）
+A. 没检查 `malloc` 的返回值\
+B. 每次循环都泄漏一块内存，没有 `free`\
+C. 双重释放\
+D. 循环变量 `i` 用错了
 
 ---
 
-**3. 想在程序运行中把动态数组从 5 个扩容到 10 个，应使用：**
+**3. 用 `realloc` 把动态数组扩容，正确的写法是？**
 
-A. `malloc(10 * sizeof(int))`  
-B. `calloc(5, 10)`  
-C. `realloc(p, 10 * sizeof(int))`（并用返回值覆盖 p）  
-D. `free(p)` 后再 malloc
-
----
-
-**4. 定义链表节点的正确写法是：**
-
-A. 
-```c
-typedef struct Node {
-    int data;
-    Node *next;
-} Node;
-```
-B. 
-```c
-typedef struct Node {
-    int data;
-    struct Node *next;
-} Node;
-```
-C. 
-```c
-struct Node {
-    int data;
-    int *next;
-} Node;
-```
-D. 
-```c
-typedef Node {
-    int data;
-    Node *next;
-};
-```
+A. `arr = realloc(arr, new_size);`\
+B. `realloc(arr, new_size);`，不接返回值\
+C. `int *tmp = realloc(arr, new_size); if (tmp == NULL) { ... } arr = tmp;`\
+D. `arr = calloc(arr, new_size);`
 
 ---
 
-**5. 删除链表"第一个节点"时，除了 free 它，还必须：**
+**4. 定义链表节点，正确的是？**
 
-A. 什么都不用做  
-B. 把 `*head` 改为原来的第二个节点  
-C. 把链表重建一遍  
-D. 把 `head` 指向 NULL
-
----
-
-## 二、填空题（共5题）
-
-**6. malloc 申请的内存在内存的_______区，用完必须调用_______释放。**
-
-**7. 申请了内存却忘记释放，会导致_______；释放后再使用这块内存，会形成_______指针。**
-
-**8. 链表里表示"到头了、没有下一个"的是把 next 置为_______。**
-
-**9. 删除链表中部节点时，关键是让目标节点的_______节点跳过它、直接连到目标的下一个。**
-
-**10. 链表要存进文件时，只应该保存每个节点的_______，读回来再重新搭链（不能存指针）。**
+A. `struct node { int data; node *next; };`\
+B. `struct node { int data; struct node *next; };`\
+C. `struct node { int data; int *next; };`\
+D. `struct node { int data; struct node next; };`
 
 ---
 
-## 三、改错题（共1题）
+**5. 删除链表的头节点，除了 `free` 它，还必须？**
 
-**11. 以下程序想在链表头部插入 3 个数字并打印，有4个错误，请逐一找出并改正：**
+A. 把 `*head` 改指原来的第二个节点\
+B. 把整个链表重建一遍\
+C. 把 `head` 保持原样\
+D. 把所有节点的 `data` 清零
+
+---
+
+## 二、填空题（每题 4 分，共 20 分）
+
+**6. `malloc` 申请的内存在\_\_\_\_\_\_\_上，用完必须调用\_\_\_\_\_\_\_释放；栈上的内存由\_\_\_\_\_\_\_自动回收。**
+
+**7. 申请了内存却不释放叫\_\_\_\_\_\_\_；释放后指针仍指向原地址叫\_\_\_\_\_\_\_指针；同一块内存释放两次叫\_\_\_\_\_\_\_。**
+
+**8. 打印 `sizeof` 的结果应该使用格式符\_\_\_\_\_\_\_。**
+
+**9. 头插要修改外面的头指针，函数参数类型是 `struct node \*\*head`，函数体内修改头指针要写\_\_\_\_\_\_\_。**
+
+**10. 删除中间节点时，先让前一个节点的 `next` 接到目标的\_\_\_\_\_\_\_，再 `free` 目标节点。**
+
+---
+
+## 三、阅读程序（每题 5 分，共 10 分）
+
+**11. 写出下面程序的输出。**
 
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Node {
-    int data;
-    struct Node *next;
-} Node;
+int main(void)
+{
+	int *arr = calloc(4, sizeof(int));
+	if (arr == NULL) {
+		return 1;
+	}
 
-void push_front(Node **head, int value) {
-    Node *node = (Node *)malloc(sizeof(Node));
-    node->data = value;        // 错误区①：缺检查
-    node->next = *head;
-    head = node;               // 错误区②：用错指针层数
-}
+	arr[1] = 5;
+	arr[3] = arr[1] * 2;
 
-void printList(Node *head) {
-    for (Node *cur = head; cur != NULL; cur = cur->next) {
-        printf("%d ", cur->data);
-    }
-    printf("\n");
-}
+	for (int i = 0; i < 4; i++) {
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
 
-int main() {
-    Node *head = NULL;
-    push_front(&head, 1);
-    push_front(&head, 2);
-    push_front(&head, 3);
-    printList(head);           // 错误区③④：缺链表释放
-    return 0;
+	free(arr);
+	arr = NULL;
+
+	return 0;
 }
 ```
 
-> 预期正确输出：`3 2 1`
+---
+
+**12. 写出下面程序片段执行后链表的内容（用 `10 -> 20 -> NULL` 的格式表示），并说明每步之后 head 指向谁。**
+
+```c
+/* create_node、push_front、push_back、delete_node 均为 6.3、6.4 的正确实现 */
+
+struct node *head = NULL;
+
+push_front(&head, 20);
+push_front(&head, 10);
+push_back(&head, 30);
+
+delete_node(&head, 10);
+```
 
 ---
 
-## 四、编程题（共3题）
+## 四、编程题（每题 10 分，共 20 分）
 
-### 12. 基础题：动态数组求和
+**13. 动态数组求最值**
 
-> 用 malloc 动态申请能装 5 个 int 的数组，存入 `{11, 22, 33, 44, 55}`，求和并输出：
-> 
-> ```
-> 总和：165
-> ```
+用 `malloc` 申请能装 6 个 `int` 的动态数组，存入 `{34, 67, 12, 89, 45, 23}`，求最大值并输出。运行效果：
 
----
+```text
+最大值：89
+```
 
-### 13. 进阶题：链表建 + 遍历 + 释放
+要求：
 
-> 用尾插法依次插入 5、10、15，然后打印：
-> 
-> ```
-> 5 -> 10 -> 15 -> NULL
-> ```
-> 
-> 要求：实现 `createNode`、`push_back`、`printList`、`freeList`，main 里用它们完成并释放。
+- `malloc` 之后检查返回值。
+- 用完 `free`，并把指针置 `NULL`。
+- 使用 `int main(void)`。
 
 ---
 
-### 14. 挑战题：链表删除（含删头）
+**14. 链表：建表、查找、删除、释放**
 
-> 实现 `int deleteByValue(Node **head, int value)`（删第一个匹配的节点，返回1；没找到返回0）。
-> 
-> 测试流程：
-> ```
-> 初始链表：10 -> 20 -> 30 -> 40
-> 删除 20 后：10 -> 30 -> 40
-> 删除 10（头）后：30 -> 40
-> 删除 99（不存在）后：30 -> 40（不变，返回0）
-> ```
+实现 `struct node` 单链表，编写 `create_node`、`push_back`、`print_list`、`find_node`、`delete_node`、`free_list`，完成下面的流程。运行效果：
+
+```text
+初始链表：10 -> 20 -> 30 -> 40 -> NULL
+删除 20 后：10 -> 30 -> 40 -> NULL
+查找 40：找到了
+查找 20：没找到
+```
+
+要求：
+
+- 插入和删除函数收 `struct node **head`，删头节点也要正确。
+- 所有函数空链表安全。
+- 最后释放整条链，`head` 置 `NULL`。
+- 使用 `int main(void)`。
 
 ---
 
-## ✅ 参考答案
+## 参考答案
 
 <details>
-<summary>🔑 点击展开答案</summary>
+<summary>点击展开答案</summary>
 
-### 选择题答案
+### 一、选择题
 
-**1. C** — malloc 失败返回 `NULL`。
+1. **C**。失败时返回 `NULL`，所以每次分配后都要检查。
+2. **B**。返回值检查了，但每循环一次申请一块、从不释放，10 万块内存全部泄漏。
+3. **C**。三步曲：临时变量接返回值、检查 `NULL`、成功才覆盖。A 的写法在失败时会把旧地址覆盖成 `NULL` 造成泄漏；B 不接返回值等于白扩；D 参数就错了。
+4. **B**。结构体定义还没结束，只能用完整的 `struct node *`；`int *` 类型不对；`struct node next` 会试图在结构体里嵌一个自己，大小无穷，编译报错。
+5. **A**。头节点一删，head 必须接上第二个节点，否则整条链丢失。这个函数的参数必须是 `struct node **`。
 
-**2. D** — 申请→使用→free→置NULL，标准写法，没毛病。
+### 二、填空题
 
-**3. C** — 扩容用 `realloc`，且用返回值覆盖原指针（不能用旧的 p，可能已搬家失效）。
+6. 堆；`free`；系统（编译器/函数结束时自动清理）。
+7. 内存泄漏；悬垂；双重释放。
+8. `%zu`。
+9. `*head = ...`（例如 `*head = n;`）。直接写 `head = ...` 改的是副本。
+10. 下一个节点（`to_delete->next`）。
 
-**4. B** — 结构体内部指向自身，还没起别名，必须写 `struct Node *next`。
+### 三、阅读程序
 
-**5. B** — 删头节点必须让 `*head` 指向原来的第二个节点，否则链表就"断头"了。
+11. 输出：
 
----
+```text
+0 5 0 10
+```
 
-### 填空题答案
+`calloc` 把 4 个元素清零，`arr[1]` 改为 5，`arr[3] = 5 * 2 = 10`，`arr[0]` 和 `arr[2]` 保持 0。
 
-**6.** 堆；`free`
+程序里 `printf("%d ", arr[i])` 每个数字后都打一个空格，所以真实输出的行尾有一个空格。核对输出时留意这种细节，写答案时标注出来即可。
 
-**7.** 内存泄漏（Memory Leak）；悬垂（dangling）
+12. 最终链表：
 
-**8.** `NULL`
+```text
+20 -> 30 -> NULL
+```
 
-**9.** 前一个（prev）
+过程：`push_front(&head, 20)` 后 head 指向 20；`push_front(&head, 10)` 后 head 指向 10（链是 `10 -> 20`）；`push_back(&head, 30)` 后 head 仍指向 10（链是 `10 -> 20 -> 30`）；`delete_node(&head, 10)` 删掉头节点，head 改指 20，链是 `20 -> 30`。
 
-**10.** 数据（data）
+### 四、编程题
 
----
-
-### 改错题答案
-
-**11. 四处错误：**
+13. 参考代码：
 
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Node {
-    int data;
-    struct Node *next;
-} Node;
+int main(void)
+{
+	int values[6] = {34, 67, 12, 89, 45, 23};
 
-void push_front(Node **head, int value) {
-    Node *node = (Node *)malloc(sizeof(Node));
-    if (node == NULL) {        // 错误1：malloc 后检查 NULL
-        return;
-    }
-    node->data = value;
-    node->next = *head;
-    *head = node;              // 错误2：改的是 *head，不是 head
-}
+	int *arr = malloc(6 * sizeof(int));
+	if (arr == NULL) {
+		printf("内存分配失败\n");
+		return 1;
+	}
 
-void printList(Node *head) {
-    for (Node *cur = head; cur != NULL; cur = cur->next) {
-        printf("%d ", cur->data);
-    }
-    printf("\n");
-}
+	int max = 0;
+	for (int i = 0; i < 6; i++) {
+		arr[i] = values[i];
+		if (i == 0 || arr[i] > max) {
+			max = arr[i];
+		}
+	}
 
-void freeList(Node *head) {
-    Node *cur = head;
-    while (cur != NULL) {
-        Node *next = cur->next;
-        free(cur);
-        cur = next;
-    }
-}
+	printf("最大值：%d\n", max);
 
-int main() {
-    Node *head = NULL;
-    push_front(&head, 1);
-    push_front(&head, 2);
-    push_front(&head, 3);
-    printList(head);           // 输出 3 2 1
-    freeList(head);            // 错误3：用完释放链表
-    head = NULL;               // 错误4（习惯）：释放后置 NULL
-    return 0;
+	free(arr);
+	arr = NULL;
+
+	return 0;
 }
 ```
 
----
-
-### 编程题参考答案
-
-**12. 动态数组求和：**
+14. 参考代码：
 
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-    int n = 5;
-    int *arr = (int *)malloc(n * sizeof(int));
-    if (arr == NULL) {
-        printf("分配失败\n");
-        return 1;
-    }
-    
-    int nums[] = {11, 22, 33, 44, 55};
-    int sum = 0;
-    for (int i = 0; i < n; i++) {
-        arr[i] = nums[i];
-        sum += arr[i];
-    }
-    printf("总和：%d\n", sum);
-    
-    free(arr);
-    return 0;
-}
-```
+struct node {
+	int data;
+	struct node *next;
+};
 
----
-
-**13. 链表建 + 遍历 + 释放：**
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct Node {
-    int data;
-    struct Node *next;
-} Node;
-
-Node *createNode(int value) {
-    Node *node = (Node *)malloc(sizeof(Node));
-    if (node == NULL) return NULL;
-    node->data = value;
-    node->next = NULL;
-    return node;
+struct node *create_node(int value)
+{
+	struct node *n = malloc(sizeof(struct node));
+	if (n == NULL) {
+		return NULL;
+	}
+	n->data = value;
+	n->next = NULL;
+	return n;
 }
 
-void push_back(Node **head, int value) {
-    Node *node = createNode(value);
-    if (node == NULL) return;
-    if (*head == NULL) {
-        *head = node;
-        return;
-    }
-    Node *tail = *head;
-    while (tail->next != NULL) {
-        tail = tail->next;
-    }
-    tail->next = node;
+void push_back(struct node **head, int value)
+{
+	struct node *n = create_node(value);
+	if (n == NULL) {
+		return;
+	}
+
+	if (*head == NULL) {
+		*head = n;
+		return;
+	}
+
+	struct node *tail = *head;
+	while (tail->next != NULL) {
+		tail = tail->next;
+	}
+	tail->next = n;
 }
 
-void printList(Node *head) {
-    for (Node *cur = head; cur != NULL; cur = cur->next) {
-        printf("%d -> ", cur->data);
-    }
-    printf("NULL\n");
+void print_list(struct node *head)
+{
+	for (struct node *cur = head; cur != NULL; cur = cur->next) {
+		printf("%d -> ", cur->data);
+	}
+	printf("NULL\n");
 }
 
-void freeList(Node *head) {
-    Node *cur = head;
-    while (cur != NULL) {
-        Node *next = cur->next;
-        free(cur);
-        cur = next;
-    }
+struct node *find_node(struct node *head, int target)
+{
+	for (struct node *cur = head; cur != NULL; cur = cur->next) {
+		if (cur->data == target) {
+			return cur;
+		}
+	}
+	return NULL;
 }
 
-int main() {
-    Node *head = NULL;
-    push_back(&head, 5);
-    push_back(&head, 10);
-    push_back(&head, 15);
-    printList(head);
-    freeList(head);
-    return 0;
-}
-```
+int delete_node(struct node **head, int target)
+{
+	if (*head == NULL) {
+		return 0;
+	}
 
----
+	if ((*head)->data == target) {
+		struct node *to_delete = *head;
+		*head = (*head)->next;
+		free(to_delete);
+		return 1;
+	}
 
-**14. 链表删除（含删头）：**
+	struct node *prev = *head;
+	while (prev->next != NULL && prev->next->data != target) {
+		prev = prev->next;
+	}
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
+	if (prev->next == NULL) {
+		return 0;
+	}
 
-typedef struct Node {
-    int data;
-    struct Node *next;
-} Node;
-
-Node *createNode(int value) { /* 略，同第13题 */ }
-void push_back(Node **head, int value) { /* 略，同第13题 */ }
-void printList(Node *head) { /* 略，同第13题 */ }
-void freeList(Node *head) { /* 略，同第13题 */ }
-
-int deleteByValue(Node **head, int value) {
-    if (*head == NULL) {
-        return 0;
-    }
-    // 目标在头部
-    if ((*head)->data == value) {
-        Node *toDelete = *head;
-        *head = (*head)->next;
-        free(toDelete);
-        return 1;
-    }
-    // 目标在中部或尾部
-    Node *prev = *head;
-    while (prev->next != NULL && prev->next->data != value) {
-        prev = prev->next;
-    }
-    if (prev->next == NULL) {
-        return 0;    // 没找到
-    }
-    Node *toDelete = prev->next;
-    prev->next = toDelete->next;
-    free(toDelete);
-    return 1;
+	struct node *to_delete = prev->next;
+	prev->next = to_delete->next;
+	free(to_delete);
+	return 1;
 }
 
-int main() {
-    Node *head = NULL;
-    int vals[] = {10, 20, 30, 40};
-    for (int i = 0; i < 4; i++) {
-        push_back(&head, vals[i]);
-    }
+void free_list(struct node *head)
+{
+	struct node *cur = head;
+	while (cur != NULL) {
+		struct node *next = cur->next;
+		free(cur);
+		cur = next;
+	}
+}
 
-    printf("初始链表："); printList(head);
+int main(void)
+{
+	struct node *head = NULL;
 
-    deleteByValue(&head, 20);
-    printf("删除 20 后："); printList(head);
+	int values[] = {10, 20, 30, 40};
+	for (int i = 0; i < 4; i++) {
+		push_back(&head, values[i]);
+	}
 
-    deleteByValue(&head, 10);
-    printf("删除 10 后："); printList(head);
+	printf("初始链表：");
+	print_list(head);
 
-    int r = deleteByValue(&head, 99);
-    printf("删除 99（返回%d）后：", r); printList(head);
+	delete_node(&head, 20);
+	printf("删除 20 后：");
+	print_list(head);
 
-    freeList(head);
-    return 0;
+	if (find_node(head, 40) != NULL) {
+		printf("查找 40：找到了\n");
+	} else {
+		printf("查找 40：没找到\n");
+	}
+
+	if (find_node(head, 20) != NULL) {
+		printf("查找 20：找到了\n");
+	} else {
+		printf("查找 20：没找到\n");
+	}
+
+	free_list(head);
+	head = NULL;
+
+	return 0;
 }
 ```
 
@@ -429,10 +378,4 @@ int main() {
 
 ---
 
-> 🎉 **第6章测试完成！**
-> 
-> 如果答对了80%以上，说明动态内存和链表你已经入门了！
-> 
-> 如果有不会的，回去复习对应的章节吧。
-> 
-> [← 回到第6章](../README.md)
+[返回第 6 章导读](../README.md)

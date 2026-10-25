@@ -1,324 +1,358 @@
-# 第8章测试：排序与查找
+# 第 8 章测试：排序与查找
 
-> 📋 **测试说明：**
-> 
-> - 📝 **选择题（5题）：** 每题考查一个核心概念
-> - 📝 **填空题（5题）：** 考查记忆和理解
-> - 📝 **改错题（1题）：** 考查代码调试能力
-> - 📝 **编程题（3题）：** 考查综合运用能力
-> 
-> 💡 **建议：** 先独立完成后，再对照参考答案检查。
+> **测试说明**
+>
+> - 选择题 5 题，填空题 5 题，阅读程序 2 题，编程题 2 题。
+> - 建议用时 60 到 90 分钟。
+> - 先独立完成，再展开文末答案。
+> - 编程题重点看思路和边界，不要求和参考答案逐字相同。
 
 ---
 
-## 一、选择题（共5题）
+## 一、选择题（每题 2 分，共 10 分）
 
-**1. 对数组 `{3, 1, 4, 2}` 做冒泡排序，第一趟结束后数组变成：**
+**1. 对数组 `{3, 1, 4, 2}` 做升序冒泡排序，第一趟结束后数组变成？**
 
-A. `1 3 2 4`  
-B. `1 2 3 4`  
-C. `3 1 4 2`（不变）  
+A. `1 3 2 4`\
+B. `1 2 3 4`\
+C. `3 1 4 2`\
 D. `2 1 4 3`
 
 ---
 
-**2. 使用二分查找的前提条件是：**
+**2. 选择排序每一趟最多交换几次？**
 
-A. 数组无序  
-B. 数组已经排好序  
-C. 数组没有重复元素  
-D. 数组长度是 2 的幂
-
----
-
-**3. 冒泡、选择、插入三种排序的比较次数大致都属于：**
-
-A. O(n)  
-B. O(n²)  
-C. O(n log n)  
-D. O(log n)
+A. 0 次\
+B. 1 次\
+C. 2 次\
+D. 不确定，取决于数据
 
 ---
 
-**4. 快速排序主要依靠哪种思想：**
+**3. 二分查找的前提条件是？**
 
-A. 从后往前比较  
-B. 贪心  
-C. 分而治之 + 递归  
-D. 穷举所有排列
-
----
-
-**5. 递归二分查找中，"没找到"的出口条件是：**
-
-A. `low == high`  
-B. `low > high`  
-C. `mid == 0`  
-D. `high == n`
+A. 数组没有重复元素\
+B. 数组长度是 2 的幂\
+C. 数组已经有序\
+D. 数组元素都是正数
 
 ---
 
-## 二、填空题（共5题）
+**4. 冒泡排序内层循环的上界写成 `j < count - 1 - i`，原因是？**
 
-**6. 选择排序每一趟会在"未排区"里挑出最_______的数放到最前面，一趟最多交换_______次。**
-
-**7. 二分查找每次比较都会排除掉候选中的_______，所以效率大约是 O(_______)。**
-
-**8. 快速排序一趟分区能让______元素"归位"（左边全比它小、右边全比它大）。**
-
-**9. 顺序查找对数组是否有序_______要求；而二分查找必须要求数组_______。**
-
-**10. 冒泡排序的内层循环上界写成 `n-1-i`，是因为每排完一趟，末尾就有_______个数已经归位、不用再比。**
+A. 防止数组越界\
+B. 尾部 `i` 个元素已经归位，不用再比较\
+C. 让比较方向从后往前\
+D. 数组长度实际上是 `count - 1 - i`
 
 ---
 
-## 三、改错题（共1题）
+**5. 下列哪种算法对"几乎已经有序"的数据最快？**
 
-**11. 以下二分查找（递归版）有 3 个错误，请找出并改正：**
+A. 冒泡排序（不带 `swapped` 优化）\
+B. 选择排序\
+C. 插入排序\
+D. 三者一样快
+
+---
+
+## 二、填空题（每题 4 分，共 20 分）
+
+**6. 冒泡排序用 `swapped` 标志实现提前退出：某一趟一次交换都没发生，说明数组已经\_\_\_\_\_\_\_\_，可以直接结束。**
+
+**7. 选择排序每一趟在未排区里找出最\_\_\_\_\_\_\_\_元素的下标，把它和未排区的第一个元素交换。**
+
+**8. 查找函数找不到目标时通常返回\_\_\_\_\_\_\_\_，因为合法下标从 0 开始，这个值不会和真实位置混淆。**
+
+**9. 二分查找计算中间下标应写成 `left + \_\_\_\_\_\_\_\_`，避免 `left + right` 直接相加导致溢出。**
+
+**10. 快速排序平均时间复杂度约为 O(\_\_\_\_\_\_\_\_)；若基准每次都选到区间的最值，会退化到 O(\_\_\_\_\_\_\_\_)。**
+
+---
+
+## 三、阅读程序（每题 5 分，共 10 分）
+
+**11. 写出下面程序的输出。**
+
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+void insertion_sort(int nums[], int count)
+{
+	for (int i = 1; i < count; i++) {
+		int key = nums[i];
+		int j = i - 1;
+
+		while (j >= 0 && nums[j] > key) {
+			nums[j + 1] = nums[j];
+			j--;
+		}
+
+		nums[j + 1] = key;
+	}
+}
+
+int main(void)
+{
+	int nums[5] = {4, 1, 3, 1, 2};
+
+	insertion_sort(nums, 5);
+
+	for (int i = 0; i < 5; i++) {
+		printf("%d", nums[i]);
+		if (i < 4) {
+			printf(" ");
+		}
+	}
+	printf("\n");
+
+	return 0;
+}
+```
+
+---
+
+**12. 下面程序想在有序数组里二分查找，有两处错误，请指出并改正。**
 
 ```c
 #include <stdio.h>
 
-int binarySearch(int a[], int low, int high, int target) {
-    if (low >= high) return -1;             // 错误区①：区间只剩 1 个数时，还能不能查？
-    int mid = (low + high) / 2;
-    if (a[mid] == target) return mid;
-    if (a[mid] < target) {
-        return binarySearch(a, mid, high, target);    // 错误区②：去右半边，mid 要不要排除？
-    } else {
-        return binarySearch(a, low, mid, target);     // 错误区③：去左半边，mid 要不要排除？
-    }
+int binary_search(const int nums[], int count, int target)
+{
+	int left = 0;
+	int right = count - 1;
+
+	while (left < right) {
+		int mid = (left + right) / 2;
+
+		if (nums[mid] == target) {
+			return mid;
+		} else if (nums[mid] < target) {
+			left = mid;
+		} else {
+			right = mid;
+		}
+	}
+
+	return -1;
 }
 
-int main() {
-    int a[] = {10, 20, 30, 40, 50};
-    int n = 5;
-    printf("%d\n", binarySearch(a, 0, n - 1, 30));   // 期望 2
-    printf("%d\n", binarySearch(a, 0, n - 1, 50));   // 期望 4
-    printf("%d\n", binarySearch(a, 0, n - 1, 99));   // 期望 -1
-    return 0;
+int main(void)
+{
+	int nums[5] = {2, 4, 6, 8, 10};
+
+	printf("%d\n", binary_search(nums, 5, 8));
+	return 0;
 }
 ```
 
-> 提示：`low == high` 时中间那个数还没查呢；去左/右半边都要把 `mid` 排除掉（分别 -1 / +1），否则会无限递归。
+---
+
+## 四、编程题（每题 10 分，共 20 分）
+
+**13. 选择排序降序版**
+
+编写函数 `void selection_sort_desc(int nums[], int count);`，把数组按**从大到小**排序，并在 `main` 里验证。运行效果：
+
+```text
+95 88 79 70 62
+```
+
+要求：
+
+- 先在未排区找**最大**元素的下标，再交换。
+- 打印函数的数组参数加 `const`。
+- 使用 `int main(void)`。
 
 ---
 
-## 四、编程题（共3题）
+**14. 快速排序**
 
-### 12. 基础题：冒泡排序
+编写程序：用快速排序把 `int scores[7] = {73, 91, 66, 85, 78, 60, 88};` 从小到大排好并打印；随后用二分查找报告 85 分的位置（下标和"从低到高的名次"）。运行效果：
 
-> 用冒泡排序把 `{6, 3, 8, 1, 9, 4}` 从小到大排序并打印：
-> 
-> ```
-> 排序后：1 3 4 6 8 9
-> ```
+```text
+快排后：60 66 73 78 85 88 91
+85 分的下标是 4，名次第 5
+```
 
----
+要求：
 
-### 13. 进阶题：递归二分查找
-
-> 在有序数组 `{10, 20, 30, 40, 50}` 里，用递归二分查找分别找 30 和 55：
-> 
-> ```
-> 查找 30：下标 2
-> 查找 55：没找到（-1）
-> ```
+- 快排用"末尾元素当基准 + Lomuto 分区 + 递归"实现，递归出口 `left >= right`。
+- 二分查找用 `left + (right - left) / 2` 计算 mid，砍半时排除 mid 本身。
+- 交换函数用指针参数实现。
+- 使用 `int main(void)`。
 
 ---
 
-### 14. 挑战题：快速排序 + 二分查找
-
-> 先对 `{88, 55, 99, 22, 66}` 做快速排序，再用递归二分查找找 66，输出：
-> 
-> ```
-> 快排后：22 55 66 88 99
-> 找到 66，下标 2
-> ```
-> 
-> 要求：自己实现 `quickSort`、`binarySearch`，在 main 里先排序、再查找并打印。
-
----
-
-## ✅ 参考答案
+## 参考答案
 
 <details>
-<summary>🔑 点击展开答案</summary>
+<summary>点击展开答案</summary>
 
-### 选择题答案
+### 一、选择题
 
-**1. A** — 第一趟两两比较：3>1换→`1 3 4 2`；3<4不换；4>2换→`1 3 2 4`，最大数 4 冒到末尾。
+1. **A**。第一趟依次比较：(3,1) 交换得 `{1,3,4,2}`，(3,4) 不换，(4,2) 交换得 `{1,3,2,4}`。最大的 4 还没归位——它在这趟只被比较了一次，要到第二趟才冒到末尾。注意"每趟归位的是未排区的最大值"，第一趟结束时最右边是 4，不是最大值 4 吗？是——`{1,3,2,4}` 末尾的 4 恰好就是最大值，它已经归位。选项 A 的 `1 3 2 4` 正确。
+2. **B**。每趟先找最小下标、扫完再交换一次，所以最多 1 次（最小值已在开头时 0 次）。
+3. **C**。二分每次靠"目标在中间的哪一边"砍半，这依赖有序性；重复元素、长度、正负都不影响可用性。
+4. **B**。第 i 趟结束后尾部 i 个元素是未排区前 i 大的数且已归位，后续趟数不必再碰它们，所以边界随 i 收缩。
+5. **C**。插入排序每张新牌几乎不用挪，近乎有序时接近 O(n)；选择排序固定约 n²/2；冒泡不加优化也是固定约 n²/2。
 
-**2. B** — 二分查找靠"中间值"判断目标在左还是右，前提是数组有序。
+### 二、填空题
 
-**3. B** — 三者都要比约 n²/2 次，都是 O(n²)。
+6. 有序。
+7. 小。
+8. `-1`。
+9. `(right - left) / 2`。
+10. `n log n`；`n²`。
 
-**4. C** — 快速排序 = 分区（分而治之）+ 递归排左右两半。
+### 三、阅读程序
 
-**5. B** — 当 `low > high` 说明区间空了、查无可查，返回 -1。
+11. 输出：
 
----
+```text
+1 1 2 3 4
+```
 
-### 填空题答案
+插入排序把每个元素插进前缀里。两个 1 相等时，后插入的 1 落在前一个 1 的后面（`nums[j] > key` 用 `>`，相等即停），顺序稳定。
 
-**6.** 小；1
+12. 两处错误：
 
-**7.** 一半；log n（对数）
+- 循环条件 `left < right` 配闭区间会漏查：区间剩一个元素（`left == right`）时不进循环。应改成 `left <= right`。
+- 砍半写成了 `left = mid;` 和 `right = mid;`，`nums[mid]` 已经比较过却没被排除，区间可能不再缩小（mid 恰好是左端点时 `left = mid` 不动），死循环。应改成 `left = mid + 1;` 和 `right = mid - 1;`。
 
-**8.** 基准（pivot）
+另外 `mid = (left + right) / 2` 在本题数据小没有问题，但规范写法是 `left + (right - left) / 2`，建议一并改掉。
 
-**9.** 没有（无）；有序
+### 四、编程题
 
-**10.** i
-
----
-
-### 改错题答案
-
-**11. 三处错误：**
+13. 参考代码：
 
 ```c
 #include <stdio.h>
 
-int binarySearch(int a[], int low, int high, int target) {
-    if (low > high) return -1;                       // 错误1：区间"空了"是 low>high
-    int mid = (low + high) / 2;
-    if (a[mid] == target) return mid;
-    if (a[mid] < target) {
-        return binarySearch(a, mid + 1, high, target); // 错误2：右半边从 mid+1 开始
-    } else {
-        return binarySearch(a, low, mid - 1, target);  // 错误3：左半边到 mid-1 结束
-    }
+void selection_sort_desc(int nums[], int count)
+{
+	for (int i = 0; i < count - 1; i++) {
+		int max_index = i;
+
+		for (int j = i + 1; j < count; j++) {
+			if (nums[j] > nums[max_index]) {
+				max_index = j;
+			}
+		}
+
+		if (max_index != i) {
+			int temp = nums[i];
+			nums[i] = nums[max_index];
+			nums[max_index] = temp;
+		}
+	}
 }
 
-int main() {
-    int a[] = {10, 20, 30, 40, 50};
-    int n = 5;
-    printf("%d\n", binarySearch(a, 0, n - 1, 30));   // 2
-    printf("%d\n", binarySearch(a, 0, n - 1, 50));   // 4
-    printf("%d\n", binarySearch(a, 0, n - 1, 99));   // -1
-    return 0;
+void print_array(const int nums[], int count)
+{
+	for (int i = 0; i < count; i++) {
+		printf("%d", nums[i]);
+		if (i < count - 1) {
+			printf(" ");
+		}
+	}
+	printf("\n");
+}
+
+int main(void)
+{
+	int nums[5] = {88, 62, 95, 70, 79};
+
+	selection_sort_desc(nums, 5);
+	print_array(nums, 5);
+
+	return 0;
 }
 ```
 
-> 用 `low >= high` 当出口会把"还剩 1 个数"的情况直接判没找到；递归不带 `mid±1` 则永远排除不掉中间，可能无限递归（如找 50 时会在 [3,4] 区间反复卡住）。
-
----
-
-### 编程题参考答案
-
-**12. 冒泡排序：**
+14. 参考代码：
 
 ```c
 #include <stdio.h>
 
-void bubbleSort(int a[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - 1 - i; j++) {
-            if (a[j] > a[j + 1]) {
-                int tmp = a[j];
-                a[j] = a[j + 1];
-                a[j + 1] = tmp;
-            }
-        }
-    }
+void swap_int(int *a, int *b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
-int main() {
-    int a[] = {6, 3, 8, 1, 9, 4};
-    int n = 6;
-    bubbleSort(a, n);
-    printf("排序后：");
-    for (int i = 0; i < n; i++) printf("%d ", a[i]);
-    printf("\n");
-    return 0;
-}
-```
+int partition(int nums[], int left, int right)
+{
+	int pivot = nums[right];
+	int i = left - 1;
 
----
+	for (int j = left; j < right; j++) {
+		if (nums[j] <= pivot) {
+			i++;
+			swap_int(&nums[i], &nums[j]);
+		}
+	}
 
-**13. 递归二分查找：**
-
-```c
-#include <stdio.h>
-
-int binarySearch(int a[], int low, int high, int target) {
-    if (low > high) return -1;
-    int mid = (low + high) / 2;
-    if (a[mid] == target) return mid;
-    if (a[mid] < target) {
-        return binarySearch(a, mid + 1, high, target);
-    } else {
-        return binarySearch(a, low, mid - 1, target);
-    }
+	swap_int(&nums[i + 1], &nums[right]);
+	return i + 1;
 }
 
-int main() {
-    int a[] = {10, 20, 30, 40, 50};
-    int n = 5;
-    int idx1 = binarySearch(a, 0, n - 1, 30);
-    printf("查找 30：");
-    if (idx1 != -1) printf("下标 %d\n", idx1);
-    else printf("没找到（-1）\n");
+void quick_sort(int nums[], int left, int right)
+{
+	if (left >= right) {
+		return;
+	}
 
-    int idx2 = binarySearch(a, 0, n - 1, 55);
-    printf("查找 55：");
-    if (idx2 != -1) printf("下标 %d\n", idx2);
-    else printf("没找到（-1）\n");
-    return 0;
-}
-```
-
----
-
-**14. 快速排序 + 二分查找：**
-
-```c
-#include <stdio.h>
-
-void swap(int a[], int i, int j) {
-    int tmp = a[i];
-    a[i] = a[j];
-    a[j] = tmp;
+	int p = partition(nums, left, right);
+	quick_sort(nums, left, p - 1);
+	quick_sort(nums, p + 1, right);
 }
 
-void quickSort(int a[], int low, int high) {
-    if (low >= high) return;
-    int pivot = a[high];
-    int i = low - 1;
-    for (int j = low; j < high; j++) {
-        if (a[j] <= pivot) {
-            i++;
-            swap(a, i, j);
-        }
-    }
-    swap(a, i + 1, high);
-    int p = i + 1;
-    quickSort(a, low, p - 1);
-    quickSort(a, p + 1, high);
+int binary_search(const int nums[], int count, int target)
+{
+	int left = 0;
+	int right = count - 1;
+
+	while (left <= right) {
+		int mid = left + (right - left) / 2;
+
+		if (nums[mid] == target) {
+			return mid;
+		} else if (nums[mid] < target) {
+			left = mid + 1;
+		} else {
+			right = mid - 1;
+		}
+	}
+
+	return -1;
 }
 
-int binarySearch(int a[], int low, int high, int target) {
-    if (low > high) return -1;
-    int mid = low + (high - low) / 2;
-    if (a[mid] == target) return mid;
-    if (a[mid] < target) return binarySearch(a, mid + 1, high, target);
-    return binarySearch(a, low, mid - 1, target);
-}
+int main(void)
+{
+	int scores[7] = {73, 91, 66, 85, 78, 60, 88};
 
-int main() {
-    int a[] = {88, 55, 99, 22, 66};
-    int n = 5;
+	quick_sort(scores, 0, 6);
 
-    quickSort(a, 0, n - 1);
-    printf("快排后：");
-    for (int i = 0; i < n; i++) printf("%d ", a[i]);
-    printf("\n");
+	printf("快排后：");
+	for (int i = 0; i < 7; i++) {
+		printf("%d", scores[i]);
+		if (i < 6) {
+			printf(" ");
+		}
+	}
+	printf("\n");
 
-    int idx = binarySearch(a, 0, n - 1, 66);
-    if (idx != -1) printf("找到 66，下标 %d\n", idx);
-    else printf("没找到 66\n");
-    return 0;
+	int index = binary_search(scores, 7, 85);
+	if (index >= 0) {
+		printf("85 分的下标是 %d，名次第 %d\n", index, index + 1);
+	} else {
+		printf("没有 85 分\n");
+	}
+
+	return 0;
 }
 ```
 
@@ -326,10 +360,4 @@ int main() {
 
 ---
 
-> 🎉 **第8章测试完成！**
-> 
-> 如果答对了80%以上，说明排序与查找你已经真正入门了！
-> 
-> 如果有不会的，回去复习对应的章节吧。
-> 
-> [← 回到第8章](../README.md)
+[返回第 8 章导读](../README.md)
