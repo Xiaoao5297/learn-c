@@ -1,293 +1,312 @@
-# 第10章测试：C语言收官篇
+# 第 10 章测试：宏、位运算、函数指针与毕业项目
 
-> 📋 **测试说明：**
-> 
-> - 📝 **选择题（5题）：** 每题考查一个核心概念
-> - 📝 **填空题（5题）：** 考查记忆和理解
-> - 📝 **改错题（1题）：** 考查代码调试能力
-> - 📝 **编程题（3题）：** 考查综合运用能力
-> 
-> 💡 **建议：** 先独立完成后，再对照参考答案检查。
+> **测试说明**
+>
+> - 选择题 5 题，填空题 5 题，阅读程序 2 题，编程题 2 题。
+> - 建议用时 60 到 90 分钟。
+> - 先独立完成，再展开文末答案。
+> - 编程题重点看思路和边界，不要求和参考答案逐字相同。
 
 ---
 
-## 一、选择题（共5题）
+## 一、选择题（每题 2 分，共 10 分）
 
-**1. `#define MAX 100` 的本质是：**
+**1. `#define SQUARE(x) ((x) * (x))`，则 `SQUARE(2 + 3)` 的值是？**
 
-A. 定义变量 MAX，值为 100  
-B. 编译前把代码里的 MAX 文本替换成 100  
-C. 分配一块内存  
-D. 定义一个函数
-
----
-
-**2. `6 & 3` 的结果是：**
-
-A. 7  
-B. 5  
-C. 2  
-D. 1
+A. 25\
+B. 11\
+C. 10\
+D. 编译错误
 
 ---
 
-**3. 判断整数 n 是否为奇数，位运算写法是：**
+**2. `12 & 10` 的值是？（12 是 `1100`，10 是 `1010`）**
 
-A. `n | 1` 为真  
-B. `n & 1` 为真  
-C. `n << 1` 为真  
-D. `~n` 为真
-
----
-
-**4. 正确的函数指针声明是：**
-
-A. `int *op(int, int);`  
-B. `int (*op)(int, int);`  
-C. `int op(int, int);`  
-D. `op int (*)(int, int);`
+A. 14\
+B. 8\
+C. 6\
+D. 2
 
 ---
 
-**5. 用 `qsort` 排序时，第 4 个参数（比较器函数）的作用是：**
+**3. 把权限 `perm` 中的 `PERM_WRITE`（值为 2）关闭，应写？**
 
-A. 指定排序算法名字  
-B. 告诉 qsort 每个元素多大  
-C. 决定"谁该排前面"（返回负/0/正）  
-D. 打印排序过程
-
----
-
-## 二、填空题（共5题）
-
-**6. `#define` 语句结尾不能写_______；宏名习惯用_______字母写。**
-
-**7. 按位与是"全1才1"用______，按位或是"有1就1"用______，异或"不同才1"用______。**
-
-**8. 函数指针声明里 `(*op)` 的括号不能省，否则会变成"返回指针的普通函数"的声明。**
-
-**9. `qsort` 比较器返回：负数表示 a 在 b_______（前/后），0 表示相等，正数表示 b 在前。**
-
-**10. 打开文件后必须检查返回值是否为_______；用完要调用_______关闭。**
+A. `perm &= PERM_WRITE;`\
+B. `perm |= PERM_WRITE;`\
+C. `perm &= ~PERM_WRITE;`\
+D. `perm ^= PERM_WRITE;`
 
 ---
 
-## 三、改错题（共1题）
+**4. 下列哪个是正确的函数指针声明？**
 
-**11. 以下程序想：用函数指针调用 add、判断 n 奇偶、用宏算平方。有 3 处错误：**
+A. `int *op(int, int);`\
+B. `int (*op)(int, int);`\
+C. `int op*(int, int);`\
+D. `(*int) op(int, int);`
+
+---
+
+**5. 关于 `qsort` 比较器的返回值，正确的说法是？**
+
+A. 只能返回 -1 和 1，不能是别的负数正数\
+B. 返回 0 表示 a 和 b 相等，`qsort` 只看返回值的符号\
+C. 返回 1 表示 a 应排在 b 前面\
+D. 返回 `x - y` 是标准写法
+
+---
+
+## 二、填空题（每题 4 分，共 20 分）
+
+**6. C 程序的诞生分三步：预处理、\_\_\_\_\_\_\_\_、链接；`#define` 发生在其中的\_\_\_\_\_\_\_\_阶段。**
+
+**7. 判断整数 n 是奇是偶的位运算写法是 `if (\_\_\_\_\_\_\_\_)`；把第 k 位打开（置 1）的写法是 `x \|= \_\_\_\_\_\_\_\_`。**
+
+**8. 声明 `int (*op)(int, int)` 时，`(*op)` 的括号不能省，否则会被理解成"返回\_\_\_\_\_\_\_\_的普通函数"；通过指针调用可以写 `op(2, 3)`，也可以写 `\_\_\_\_\_\_\_\_(2, 3)`。**
+
+**9. int 比较器为了防溢出，应写 `return (x > y) - (x < y);` 而不是 `return \_\_\_\_\_\_\_\_;`；`qsort` 的第三个参数传的是\_\_\_\_\_\_\_\_。**
+
+**10. 读盘函数对文件头的个数要做两道检查：`fscanf` 的\_\_\_\_\_\_\_\_是否为 1，以及个数是否在\_\_\_\_\_\_\_\_范围内。**
+
+---
+
+## 三、阅读程序（每题 5 分，共 10 分）
+
+**11. 写出下面程序的输出。**
 
 ```c
 #include <stdio.h>
 
-int add(int a, int b) { return a + b; }
+#define TRIPLE(x) ((x) * 3)
 
-#define SQUARE(x) x * x                 // 错误区①：缺括号，SQUARE(2+3) 会算成多少？
+void apply(int nums[], int count, int (*fn)(int))
+{
+	for (int i = 0; i < count; i++) {
+		nums[i] = fn(nums[i]);
+	}
+}
 
-int main() {
-    int *op(int, int);                  // 错误区②：这是函数声明还是函数指针？
-    op = add;                           // 想让 op 指向 add
-    printf("add：%d\n", op(2, 3));      // 期望 5
+int add_ten(int x)
+{
+	return x + 10;
+}
 
-    int n = 7;
-    if (n = 1) {                        // 错误区③：想判断奇偶，写成什么了？
-        printf("%d 是奇数\n", n);
-    }
+int main(void)
+{
+	int nums[4] = {1, 2, 3, 4};
 
-    printf("SQUARE(2+3) = %d\n", SQUARE(2 + 3));  // 期望 25
-    return 0;
+	apply(nums, 4, add_ten);
+
+	for (int i = 0; i < 4; i++) {
+		printf("%d", TRIPLE(nums[i]));
+		if (i < 3) {
+			printf(" ");
+		}
+	}
+	printf("\n");
+
+	return 0;
 }
 ```
 
-> 提示：①宏参数要加括号 `((x)*(x))`；②函数指针要写 `int (*op)(int,int);`；③奇偶判断要 `n & 1`，`n = 1` 是赋值！
+---
+
+**12. 下面程序想读入并校验通讯录文件，有两处错误，请指出并改正。**
+
+```c
+#include <stdio.h>
+
+#define MAX_CONTACTS 10
+
+int main(void)
+{
+	FILE *fp = fopen("contacts.txt", "r");
+	if (fp == NULL) {
+		return 1;
+	}
+
+	int count;
+	fscanf(fp, "%d", &count);
+
+	for (int i = 0; i < count; i++) {
+		char name[30];
+		char phone[20];
+		fscanf(fp, "%s %s", name, phone);
+		printf("%s %s\n", name, phone);
+	}
+
+	fclose(fp);
+	return 0;
+}
+```
 
 ---
 
-## 四、编程题（共3题）
+## 四、编程题（每题 10 分，共 20 分）
 
-### 12. 基础题：宏求圆
+**13. 位标志系统**
 
-> 用 `#define PI 3.14159`，输入半径 r=5，打印圆的周长和面积（%.4f）：
-> 
-> ```
-> 周长 = 31.4159
-> 面积 = 78.5397
-> ```
-> 公式：周长 2*PI*r，面积 PI*r*r。
+定义 `FLAG_BOLD 1`、`FLAG_ITALIC 2`、`FLAG_UNDER 4`。初始 `style = FLAG_BOLD`，然后依次：打开 `FLAG_UNDER`、切换 `FLAG_ITALIC`、关闭 `FLAG_BOLD`。每步之后打印 `style` 的值，最后检查三个标志各自是开还是关。运行效果：
 
----
+```text
+打开 UNDER 后：5
+切换 ITALIC 后：7
+关闭 BOLD 后：6
+粗体：关
+斜体：开
+下划线：开
+```
 
-### 13. 进阶题：qsort 降序排 int
+要求：
 
-> 用 `qsort` 把 `{4, 9, 2, 6, 1}` 从大到小排序并打印：
-> 
-> ```
-> 排序后：9 6 4 2 1
-> ```
-> 要求：自己写比较器 `cmpDesc`。
+- 打开用 `|=`，切换用 `^=`，关闭用 `&= ~`。
+- 标志定义为宏，取值每个独占一个二进制位。
+- 使用 `int main(void)`。
 
 ---
 
-### 14. 挑战题：给结构体排序
+**14. 通讯录核心功能**
 
-> 定义 `Student { char name[32]; int score; }`，用 `qsort` 按**分数从高到低**排下面三人：
-> 
-> ```
-> Alice 88
-> Bob 72
-> Carol 95
-> ```
-> 输出：
-> ```
-> 按分数降序：Carol(95) Alice(88) Bob(72)
-> ```
+编写程序：定义 `struct contact { char name[30]; char phone[20]; };`，预置 `{"carol", "3"}`、`{"alice", "1"}`、`{"bob", "2"}` 三人，用 `qsort` 按姓名升序排序后逐行打印，再提示输入一个姓名查找并报告找到与否。运行效果（输入 `bob`）：
+
+```text
+alice 1
+bob 2
+carol 3
+要找谁：找到：bob（2）
+```
+
+要求：
+
+- 比较器参数是 `const void *`，先转换回 `const struct contact *`，直接返回 `strcmp` 的结果。
+- 查找输入用 `scanf("%29s", ...)` 并检查返回值。
+- 使用 `int main(void)`。
 
 ---
 
-## ✅ 参考答案
+## 参考答案
 
 <details>
-<summary>🔑 点击展开答案</summary>
+<summary>点击展开答案</summary>
 
-### 选择题答案
+### 一、选择题
 
-**1. B** — `#define` 是预处理阶段的"文本替换"，不是定义变量。
+1. **A**。参数带了括号，`(2 + 3)` 先算成 5，得 `((5) * (5))` = 25。缺括号的版本才会展开成 `2 + 3 * 2 + 3` = 11。
+2. **B**。逐位与：只有权重 8 那一位两边都是 1，`1100 & 1010 = 1000` = 8。
+3. **C**。`~PERM_WRITE` 把掩码反转成"只差这一位是 0"，按位与后恰好清掉这一位；`^=` 是切换，`|=` 是打开。
+4. **B**。`(*op)` 的括号把"op 是指针"钉死；A 是返回 `int *` 的普通函数。
+5. **B**。`qsort` 只看符号，返回任何负数/0/正数都合法；返回 1 是 b 在前；`x - y` 有溢出风险，不是标准写法。
 
-**2. C** — 6=`110`，3=`011`，按位与得 `010` = 2。
+### 二、填空题
 
-**3. B** — 奇数最低位是 1，`n & 1` 非 0 即奇数。
+6. 编译；预处理。
+7. `n & 1`；`x |= (1u << k)`（写 `(1u << k)` 或具体标志宏都对）。
+8. `int *`；`(*op)`。
+9. `x - y`；单个元素的字节数（`sizeof(元素类型)`）。
+10. 返回值；`0` 到数组容量（含两端）。
 
-**4. B** — `int (*op)(int, int);`，`(*op)` 的括号表示 op 是指针。
+### 三、阅读程序
 
-**5. C** — 比较器返回负/0/正，告诉排序函数任意两个元素谁该在前。
+11. 输出：
 
----
+```text
+33 36 39 42
+```
 
-### 填空题答案
+`apply` 通过函数指针给每个元素加 10，数组变成 `{11, 12, 13, 14}`；`TRIPLE` 是带参宏，展开成 `((nums[i]) * 3)`，得 33、36、39、42。
 
-**6.** 分号（`;`）；大写
+12. 两处错误：
 
-**7.** `&`；`|`；`^`
+- `fscanf(fp, "%d", &count)` 没有检查返回值，也没有校验范围。文件开头不是数字时 `count` 是未初始化的垃圾值；数字超过 `MAX_CONTACTS` 时循环越界。应改为 `if (fscanf(fp, "%d", &count) != 1 || count < 0 || count > MAX_CONTACTS) { fclose(fp); return 1; }`。
+- `fscanf(fp, "%s %s", name, phone)` 不限宽，也不检查返回值。文件里出现超长字段就会溢出，残缺记录也照常打印。应改为 `if (fscanf(fp, "%29s %19s", name, phone) != 2) { fclose(fp); return 1; }`。
 
-**8.** （该空已给出）
+### 四、编程题
 
-**9.** 前
-
-**10.** `NULL`；`fclose`
-
----
-
-### 改错题答案
-
-**11. 三处错误：**
+13. 参考代码：
 
 ```c
 #include <stdio.h>
 
-int add(int a, int b) { return a + b; }
+#define FLAG_BOLD 1
+#define FLAG_ITALIC 2
+#define FLAG_UNDER 4
 
-#define SQUARE(x) ((x) * (x))          // 错误1：参数加括号，SQUARE(2+3)=25
+int main(void)
+{
+	unsigned int style = FLAG_BOLD;
 
-int main() {
-    int (*op)(int, int);                // 错误2：写成函数指针声明
-    op = add;
-    printf("add：%d\n", op(2, 3));      // 5
+	style |= FLAG_UNDER;
+	printf("打开 UNDER 后：%u\n", style);
 
-    int n = 7;
-    if (n & 1) {                        // 错误3：位与判断奇偶，不是赋值
-        printf("%d 是奇数\n", n);        // 7 是奇数
-    }
+	style ^= FLAG_ITALIC;
+	printf("切换 ITALIC 后：%u\n", style);
 
-    printf("SQUARE(2+3) = %d\n", SQUARE(2 + 3));  // 25
-    return 0;
+	style &= (unsigned int)~FLAG_BOLD;
+	printf("关闭 BOLD 后：%u\n", style);
+
+	printf("粗体：%s\n", (style & FLAG_BOLD) ? "开" : "关");
+	printf("斜体：%s\n", (style & FLAG_ITALIC) ? "开" : "关");
+	printf("下划线：%s\n", (style & FLAG_UNDER) ? "开" : "关");
+
+	return 0;
 }
 ```
 
-> 正确输出：
-> ```
-> add：5
-> 7 是奇数
-> SQUARE(2+3) = 25
-> ```
+过程：1 → 打开 UNDER 得 5（`101`）→ 切换 ITALIC 得 7（`111`）→ 关闭 BOLD 得 6（`110`）。
 
----
-
-### 编程题参考答案
-
-**12. 宏求圆：**
-
-```c
-#include <stdio.h>
-
-#define PI 3.14159
-
-int main() {
-    double r = 5.0;
-    printf("周长 = %.4f\n", 2 * PI * r);
-    printf("面积 = %.4f\n", PI * r * r);
-    return 0;
-}
-```
-
----
-
-**13. qsort 降序排 int：**
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int cmpDesc(const void *a, const void *b) {
-    int x = *(const int *)a;
-    int y = *(const int *)b;
-    return y - x;            // 大的在前 → 降序
-}
-
-int main() {
-    int a[] = {4, 9, 2, 6, 1};
-    int n = 5;
-    qsort(a, n, sizeof(int), cmpDesc);
-    printf("排序后：");
-    for (int i = 0; i < n; i++) printf("%d ", a[i]);
-    printf("\n");
-    return 0;
-}
-```
-
----
-
-**14. 给结构体按分数降序排序：**
+14. 参考代码：
 
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
-    char name[32];
-    int score;
-} Student;
+struct contact {
+	char name[30];
+	char phone[20];
+};
 
-int cmpScoreDesc(const void *a, const void *b) {
-    const Student *sa = (const Student *)a;
-    const Student *sb = (const Student *)b;
-    return sb->score - sa->score;   // 分数高的在前 → 降序
+int compare_by_name(const void *a, const void *b)
+{
+	const struct contact *ca = (const struct contact *)a;
+	const struct contact *cb = (const struct contact *)b;
+
+	return strcmp(ca->name, cb->name);
 }
 
-int main() {
-    Student stu[] = {
-        {"Alice", 88},
-        {"Bob", 72},
-        {"Carol", 95}
-    };
-    int n = 3;
+int main(void)
+{
+	struct contact book[3] = {
+		{"carol", "3"},
+		{"alice", "1"},
+		{"bob", "2"},
+	};
 
-    qsort(stu, n, sizeof(Student), cmpScoreDesc);
-    printf("按分数降序：");
-    for (int i = 0; i < n; i++) {
-        printf("%s(%d) ", stu[i].name, stu[i].score);
-    }
-    printf("\n");
-    return 0;
+	qsort(book, 3, sizeof(struct contact), compare_by_name);
+
+	for (int i = 0; i < 3; i++) {
+		printf("%s %s\n", book[i].name, book[i].phone);
+	}
+
+	char key[30];
+
+	printf("要找谁：");
+	if (scanf("%29s", key) != 1) {
+		printf("读取失败\n");
+		return 1;
+	}
+
+	for (int i = 0; i < 3; i++) {
+		if (strcmp(book[i].name, key) == 0) {
+			printf("找到：%s（%s）\n",
+			       book[i].name, book[i].phone);
+			return 0;
+		}
+	}
+
+	printf("没有找到 %s\n", key);
+
+	return 0;
 }
 ```
 
@@ -295,10 +314,4 @@ int main() {
 
 ---
 
-> 🎉 **第10章测试完成！**
-> 
-> 如果答对了80%以上，说明预处理、位运算、函数指针你已经全部掌握——C 语言十章修炼，圆满收官！
-> 
-> 如果有不会的，回去复习对应的章节吧。
-> 
-> [← 回到第10章](../README.md)
+[返回第 10 章导读](../README.md)

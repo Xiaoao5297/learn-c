@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+
+# examples/ 由脚本生成，预期输出里可能有故意的尾随空格（printf 表格）
+examples/** -whitespace

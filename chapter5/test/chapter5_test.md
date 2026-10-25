@@ -1,332 +1,369 @@
-# 第5章测试：文件读写与实战
+# 第 5 章测试：文件读写与实战
 
-> 📋 **测试说明：**
-> 
-> - 📝 **选择题（5题）：** 每题考查一个核心概念
-> - 📝 **填空题（5题）：** 考查记忆和理解
-> - 📝 **改错题（1题）：** 考查代码调试能力
-> - 📝 **编程题（3题）：** 考查综合运用能力
-> 
-> 💡 **建议：** 先独立完成后，再对照参考答案检查。
-> 
-> ⚠️ **提示：** 编程题请在**自己的电脑上**运行验证（会生成真实文件）。
+> **测试说明**
+>
+> - 选择题 5 题，填空题 5 题，阅读程序 2 题，编程题 2 题。
+> - 建议用时 60 到 90 分钟。
+> - 先独立完成，再展开文末答案。
+> - 编程题重点看思路和边界，不要求和参考答案逐字相同。
 
 ---
 
-## 一、选择题（共5题）
+## 一、选择题（每题 2 分，共 10 分）
 
-**1. `fopen` 打开文件失败时会返回：**
+**1. `fopen` 打开文件失败时返回什么？**
 
-A. `0`  
-B. `-1`  
-C. `NULL`  
-D. `EOF`
+A. `0`\
+B. `NULL`\
+C. `EOF`\
+D. `-1`
 
 ---
 
-**2. 想"保留文件原有内容，只在末尾追加"，应该用哪个模式：**
+**2. 想保留 `log.txt` 的原有内容，只在末尾追加新的一行，应该用哪个模式？**
 
-A. `"r"`  
-B. `"w"`  
-C. `"a"`  
+A. `"r"`\
+B. `"w"`\
+C. `"a"`\
 D. `"r+"`
 
 ---
 
-**3. 判断 `fgetc` 是否读到文件末尾，需要判断返回值是否等于：**
+**3. `fgetc` 读到文件末尾时返回？**
 
-A. `0`  
-B. `'\0'`  
-C. `NULL`  
+A. `'\0'`\
+B. `0`\
+C. `NULL`\
 D. `EOF`
 
 ---
 
-**4. 读取一整行文本（含空格）最合适的函数是：**
+**4. 关于 `fgets` 读到的一行，下面说法正确的是？**
 
-A. `fscanf(fp, "%s", buf)`  
-B. `fgets(buf, 大小, fp)`  
-C. `fgetc(fp)`  
-D. `fread(buf, 1, 大小, fp)`
-
----
-
-**5. 想把一个结构体数组整体存成二进制文件，正确的写法是：**
-
-A. `fprintf(fp, "%s", arr)`  
-B. `fwrite(arr, sizeof(类型), 个数, fp)`  
-C. `fputs(arr, fp)`  
-D. `fputc(arr, fp)`
+A. 换行符会被自动去掉\
+B. 换行符会保留在数组里\
+C. 遇到空格就停止读取\
+D. 只能读出最多 10 个字符
 
 ---
 
-## 二、填空题（共5题）
+**5. 用 `fwrite` 存的结构体二进制文件，下面哪种说法是对的？**
 
-**6. 用"状态码 + 指针"设计函数时，函数用_______表示成功/失败，结果通过指针参数带出去。**
-
-**7. 打印上次错误的具体原因，可以用函数_______（它会输出 "你的话: 错误描述"）。**
-
-**8. 想回到文件开头重新读，可以调用函数_______。**
-
-**9. 把内存数据存进文件、让程序重启后还能读回，这种思想叫"_______"。**
-
-**10. `main(int argc, char *argv[])` 中，`argv[0]` 通常是_______。**
+A. 换一台电脑、换一个编译器一定能正确读回\
+B. 只能在同一平台、同一编译器编译的程序间可靠读回\
+C. 用记事本打开也是清晰的文字\
+D. `fwrite` 失败时返回负数
 
 ---
 
-## 三、改错题（共1题）
+## 二、填空题（每题 4 分，共 20 分）
 
-**11. 以下程序想把两个整数写入文件并读回求和，有4个错误，请逐一找出并改正：**
+**6. 打开文件后必须调用函数 `________` 关闭它，否则缓冲区里的数据可能没有真正写进硬盘。**
+
+**7. `fscanf(fp, "%d", &x)` 正常读到 1 个整数时返回值是 `________`。**
+
+**8. `char line[32];` 想用 `fscanf` 从文件安全读入一个单词，转换说明应写成 `________`。**
+
+**9. 用 `fseek(fp, 0, SEEK_END)` 跳到文件末尾后，调用 `________` 就能得到文件大小（字节数）。**
+
+**10. 结构体的内存字节被 `fwrite` 原样存盘，其中编译器为了对齐插入的、看不见的字节叫 `________` 字节，它是二进制文件不可移植的原因之一。**
+
+---
+
+## 三、阅读程序（每题 5 分，共 10 分）
+
+**11. 写出下面程序运行后 `nums.txt` 的内容和屏幕输出。**
 
 ```c
 #include <stdio.h>
 
-int main() {
-    FILE *fp = fopen("num.txt", "w");      // 错误区①：没检查是否 NULL
-    fprintf(fp, "7\n13\n");
-    fclose(fp);
-    
-    fp = fopen("num.txt", "r");            // 错误区②：模式错误？r 是对的，请检查别处
-    int a, b;
-    fscanf(fp, "%d %d", a, b);             // 错误区③：缺 & 符号
-    fclose(fp);
-    
-    printf("和：%d\n", a + b);
-    return 0;
+int main(void)
+{
+	FILE *fp = fopen("nums.txt", "w");
+	if (fp == NULL) {
+		return 1;
+	}
+	for (int i = 1; i <= 3; i++) {
+		fprintf(fp, "%d\n", i);
+	}
+	fclose(fp);
+
+	int sum = 0;
+	int x;
+
+	fp = fopen("nums.txt", "r");
+	if (fp == NULL) {
+		return 1;
+	}
+	while (fscanf(fp, "%d", &x) == 1) {
+		sum += x;
+	}
+	fclose(fp);
+
+	printf("%d\n", sum);
+	return 0;
 }
 ```
 
-> 提示：除了 fopen 后检查 NULL 和 fscanf 缺 `&`，还可以思考：如果文件里数字多于2个，只读两个够吗？以及好的习惯是检查 fscanf 的返回值。
+---
+
+**12. 下面程序想把数据文件读进数组，存在两个安全问题，请指出并改正。**
+
+```c
+#include <stdio.h>
+
+#define MAX 50
+
+struct student {
+	char name[20];
+	int score;
+};
+
+int main(void)
+{
+	struct student list[MAX];
+	int count;
+
+	FILE *fp = fopen("data.txt", "r");
+	if (fp == NULL) {
+		return 1;
+	}
+
+	fscanf(fp, "%d", &count);
+	for (int i = 0; i < count; i++) {
+		fscanf(fp, "%s %d", list[i].name, &list[i].score);
+	}
+	fclose(fp);
+
+	printf("%d\n", count);
+	return 0;
+}
+```
 
 ---
 
-## 四、编程题（共3题）
+## 四、编程题（每题 10 分，共 20 分）
 
-### 12. 基础题：追加日志
+**13. 单词统计**
 
-> 编写程序，用 `"a"` 模式往 `log.txt` 追加一行：`第N次运行`（N 每次加1）。
-> 
-> 运行两次后，`log.txt` 内容类似：
-> ```
-> 第1次运行
-> 第2次运行
-> ```
-> 
-> 提示：先读旧内容数出已有几行，再追加下一行；或更简单——先运行两次分别写固定递增文本（用两次不同常量）。
+文件 `words.txt` 内容为（每行一个单词）：
 
----
+```text
+red
+green
+blue
+```
 
-### 13. 进阶题：逐行打印文件
+编写程序，用 `fgets` 逐行读取，统计单词个数，并输出最长单词的长度（读入后先去掉换行符），输出：
 
-> 编写程序用 `fgets` 一行行读取 `poem.txt` 并加上行号打印。
-> 
-> 假设 `poem.txt`：
-> ```
-> 床前明月光
-> 疑是地上霜
-> ```
-> 
-> 输出：
-> ```
-> 1: 床前明月光
-> 2: 疑是地上霜
-> ```
+```text
+3 个单词，最长 5 个字符
+```
+
+要求：
+
+- 逐行读取前先用 `"w"` 模式把这三个单词写进文件，保证程序自给自足。
+- 用 `strcspn` 去掉行尾换行符。
+- 使用 `int main(void)`。
 
 ---
 
-### 14. 挑战题：学生成绩存档系统（简化版）
+**14. 成绩存档**
 
-> 定义一个 `Student` 结构体（姓名、成绩），编写两个函数：
-> 
-> ```c
-> int saveToFile(Student arr[], int count);   // 存到 scores.txt，成功0/失败-1
-> int loadFromFile(Student arr[], int max);   // 读回，返回人数
-> ```
-> 
-> 在 main 中：先把 2 个学生存盘，再读回打印。
-> 
-> 预期输出：
-> ```
-> 读回的学生：
-> 小明：95.0分
-> 小红：72.5分
-> ```
+定义结构体（不要用 `typedef`）：
+
+```c
+struct student {
+	char name[20];
+	int score;
+};
+```
+
+编写两个函数和 `main`：
+
+```c
+int save_students(const struct student list[], int count);
+int load_students(struct student list[], int max);
+```
+
+要求：
+
+- `save_students` 把个数和每个学生（`"%s %d\n"`）写进 `students.txt`，成功返回 0，失败返回 -1。
+- `load_students` 先读个数并**校验返回值和范围**（负数或大于 `max` 都算坏文件），再用限宽 `%19s` 读姓名，每条都要检查返回值；任何一步不对返回 -1。
+- `main` 里存 2 个学生再读回打印，预期输出：
+
+```text
+读回 2 个学生：
+xiaoming 90
+xiaohong 85
+```
 
 ---
 
-## ✅ 参考答案
+## 参考答案
 
 <details>
-<summary>🔑 点击展开答案</summary>
+<summary>点击展开答案</summary>
 
-### 选择题答案
+### 一、选择题
 
-**1. C** — `fopen` 失败返回 `NULL`。
+1. **B**。失败返回 `NULL`，所以打开后必须检查 `if (fp == NULL)`。
+2. **C**。`"a"` 追加模式不破坏原内容；`"w"` 会先清空整个文件。
+3. **D**。`fgetc` 读到末尾返回 `EOF`，所以接收变量用 `int`。
+4. **B**。`fgets` 会把换行符一起读进数组，处理前常用 `strcspn` 去掉；`%s` 才是遇空格停。
+5. **B**。二进制文件里的填充字节、端序、类型大小都依赖平台和编译器，换环境就不可靠；用记事本打开是乱码；`fwrite` 失败返回的是小于请求值的元素个数，不是负数。
 
-**2. C** — 追加用 `"a"`；`"w"` 会清空旧内容。
+### 二、填空题
 
-**3. D** — `fgetc` 读到末尾返回 `EOF`（-1）。
+6. `fclose`
+7. `1`。`fscanf` 返回成功读到的项目数。
+8. `%31s`。宽度是缓冲区大小减 1：32 − 1 = 31。
+9. `ftell(fp)`。末尾位置到开头的距离就是文件大小。
+10. 填充（padding）。
 
-**4. B** — `fgets` 读一整行（含空格）；`%s` 遇空格就停。
+### 三、阅读程序
 
-**5. B** — `fwrite(数组, sizeof(类型), 个数, fp)`。
+11. `nums.txt` 的内容是三行：
 
----
+```text
+1
+2
+3
+```
 
-### 填空题答案
+屏幕输出：
 
-**6.** 返回值（0/-1）
+```text
+6
+```
 
-**7.** `perror`
+写入用了 `"%d\n"`，每个数字后一个换行；读回时 `fscanf("%d", ...)` 会跳过空白依次读到 1、2、3，求和得 6。
 
-**8.** `rewind`
+12. 两处问题：
 
-**9.** 持久化
+- `fscanf(fp, "%d", &count);` 没检查返回值，也没校验范围。文件坏了时 `count` 是垃圾值，`count > MAX` 时后面会越界写数组。应改成 `if (fscanf(fp, "%d", &count) != 1 || count < 0 || count > MAX) { fclose(fp); return 1; }`。
+- `fscanf(fp, "%s %d", ...)` 的 `%s` 没有限宽，文件里出现超长姓名会冲出 `name[20]`。应改成 `%19s`（缓冲区大小减 1），并检查每次 `fscanf` 的返回值是否为 2。
 
-**10.** 程序自己的名字（`./程序名`）
+### 四、编程题
 
----
-
-### 改错题答案
-
-**11. 四处错误：**
+13. 参考代码：
 
 ```c
 #include <stdio.h>
+#include <string.h>
 
-int main() {
-    FILE *fp = fopen("num.txt", "w");
-    if (fp == NULL) {          // 错误1：检查 fopen 是否成功
-        perror("写入失败");
-        return 1;
-    }
-    fprintf(fp, "7\n13\n");
-    fclose(fp);
-    
-    fp = fopen("num.txt", "r");
-    if (fp == NULL) {          // 顺手检查读取也一样重要
-        perror("读取失败");
-        return 1;
-    }
-    int a, b;
-    if (fscanf(fp, "%d %d", &a, &b) != 2) {   // 错误2：变量前加 &；错误3/4：检查 fscanf 返回值
-        printf("读取失败或格式不对\n");
-        fclose(fp);
-        return 1;
-    }
-    fclose(fp);
-    
-    printf("和：%d\n", a + b);
-    return 0;
+int main(void)
+{
+	char line[64];
+
+	FILE *fp = fopen("words.txt", "w");
+	if (fp == NULL) {
+		return 1;
+	}
+	fprintf(fp, "red\ngreen\nblue\n");
+	fclose(fp);
+
+	fp = fopen("words.txt", "r");
+	if (fp == NULL) {
+		return 1;
+	}
+
+	int count = 0;
+	int max_len = 0;
+
+	while (fgets(line, sizeof(line), fp) != NULL) {
+		line[strcspn(line, "\n")] = '\0';
+		count++;
+		if ((int)strlen(line) > max_len) {
+			max_len = (int)strlen(line);
+		}
+	}
+	fclose(fp);
+
+	printf("%d 个单词，最长 %d 个字符\n", count, max_len);
+
+	return 0;
 }
 ```
 
----
-
-### 编程题参考答案
-
-**12. 追加日志：**
+14. 参考代码：
 
 ```c
 #include <stdio.h>
 
-int main() {
-    FILE *fp = fopen("log.txt", "a");   // 追加模式
-    if (fp == NULL) {
-        perror("打开失败");
-        return 1;
-    }
-    
-    fprintf(fp, "第1次运行\n");   // 第一次运行时写这行
-    fclose(fp);
-    
-    return 0;
-}
-```
+#define DATA_FILE "students.txt"
+#define MAX_STUDENTS 100
 
-> 运行两次时，可把"第1次运行"改成"第2次运行"再运行第二次，验证是否保留旧内容、只在末尾追加。
+struct student {
+	char name[20];
+	int score;
+};
 
----
+int save_students(const struct student list[], int count)
+{
+	FILE *fp = fopen(DATA_FILE, "w");
+	if (fp == NULL) {
+		return -1;
+	}
 
-**13. 逐行打印文件：**
+	fprintf(fp, "%d\n", count);
+	for (int i = 0; i < count; i++) {
+		fprintf(fp, "%s %d\n", list[i].name, list[i].score);
+	}
 
-```c
-#include <stdio.h>
-
-int main() {
-    FILE *fp = fopen("poem.txt", "r");
-    if (fp == NULL) {
-        perror("打开失败");
-        return 1;
-    }
-    
-    char line[200];
-    int lineNumber = 1;
-    while (fgets(line, sizeof(line), fp) != NULL) {
-        printf("%d: %s", lineNumber, line);
-        lineNumber++;
-    }
-    
-    fclose(fp);
-    return 0;
-}
-```
-
----
-
-**14. 学生成绩存档系统（简化版）：**
-
-```c
-#include <stdio.h>
-
-typedef struct {
-    char name[20];
-    double score;
-} Student;
-
-int saveToFile(Student arr[], int count) {
-    FILE *fp = fopen("scores.txt", "w");
-    if (fp == NULL) {
-        perror("保存失败");
-        return -1;
-    }
-    for (int i = 0; i < count; i++) {
-        fprintf(fp, "%s %.1f\n", arr[i].name, arr[i].score);
-    }
-    fclose(fp);
-    return 0;
+	fclose(fp);
+	return 0;
 }
 
-int loadFromFile(Student arr[], int max) {
-    FILE *fp = fopen("scores.txt", "r");
-    if (fp == NULL) {
-        return 0;
-    }
-    int count = 0;
-    while (count < max &&
-           fscanf(fp, "%s %lf", arr[count].name, &arr[count].score) == 2) {
-        count++;
-    }
-    fclose(fp);
-    return count;
+int load_students(struct student list[], int max)
+{
+	FILE *fp = fopen(DATA_FILE, "r");
+	if (fp == NULL) {
+		return -1;
+	}
+
+	int count = 0;
+	if (fscanf(fp, "%d", &count) != 1 || count < 0 || count > max) {
+		fclose(fp);
+		return -1;
+	}
+
+	for (int i = 0; i < count; i++) {
+		if (fscanf(fp, "%19s %d", list[i].name, &list[i].score) != 2) {
+			fclose(fp);
+			return -1;
+		}
+	}
+
+	fclose(fp);
+	return count;
 }
 
-int main() {
-    Student class[2] = {{"小明", 95.0}, {"小红", 72.5}};
-    
-    if (saveToFile(class, 2) != 0) {
-        printf("保存失败！\n");
-        return 1;
-    }
-    
-    Student loaded[2];
-    int count = loadFromFile(loaded, 2);
-    
-    printf("读回的学生：\n");
-    for (int i = 0; i < count; i++) {
-        printf("%s：%.1f分\n", loaded[i].name, loaded[i].score);
-    }
-    return 0;
+int main(void)
+{
+	struct student class[MAX_STUDENTS] = {
+		{"xiaoming", 90},
+		{"xiaohong", 85},
+	};
+
+	if (save_students(class, 2) != 0) {
+		printf("保存失败\n");
+		return 1;
+	}
+
+	struct student loaded[MAX_STUDENTS];
+	int count = load_students(loaded, MAX_STUDENTS);
+	if (count < 0) {
+		printf("加载失败\n");
+		return 1;
+	}
+
+	printf("读回 %d 个学生：\n", count);
+	for (int i = 0; i < count; i++) {
+		printf("%s %d\n", loaded[i].name, loaded[i].score);
+	}
+
+	return 0;
 }
 ```
 
@@ -334,10 +371,4 @@ int main() {
 
 ---
 
-> 🎉 **第5章测试完成！**
-> 
-> 如果答对了80%以上，说明你已经掌握C语言的错误处理和文件读写！
-> 
-> 如果有不会的，回去复习对应的章节吧。
-> 
-> [← 回到第5章](../README.md)
+[返回第 5 章](../README.md)
