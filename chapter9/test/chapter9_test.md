@@ -1,318 +1,495 @@
-# 第9章测试：栈、队列与二叉树
+# 第 9 章测试：栈、队列与二叉树
 
-> 📋 **测试说明：**
-> 
-> - 📝 **选择题（5题）：** 每题考查一个核心概念
-> - 📝 **填空题（5题）：** 考查记忆和理解
-> - 📝 **改错题（1题）：** 考查代码调试能力
-> - 📝 **编程题（3题）：** 考查综合运用能力
-> 
-> 💡 **建议：** 先独立完成后，再对照参考答案检查。
+> **测试说明**
+>
+> - 选择题 5 题，填空题 5 题，阅读程序 2 题，编程题 2 题。
+> - 建议用时 60 到 90 分钟。
+> - 先独立完成，再展开文末答案。
+> - 编程题重点看思路和边界，不要求和参考答案逐字相同。
 
 ---
 
-## 一、选择题（共5题）
+## 一、选择题（每题 2 分，共 10 分）
 
-**1. 栈与队列最本质的区别是：**
+**1. 栈与队列最本质的区别是？**
 
-A. 栈用数组，队列用链表  
-B. 栈是"后进先出"（LIFO），队列是"先进先出"（FIFO）  
-C. 栈只能存整数，队列能存任何数据  
-D. 没有区别
-
----
-
-**2. 依次 enqueue 1、2、3，再 dequeue 一次，得到的是：**
-
-A. 1  
-B. 3  
-C. 2  
-D. 队空报错
+A. 栈用数组，队列用链表\
+B. 栈后进先出，队列先进先出\
+C. 栈只能存整数，队列什么都能存\
+D. 栈比队列慢
 
 ---
 
-**3. 循环队列中，入队/出队后写 `head = (head + 1) % MAX` 是为了：**
+**2. 循环队列里，出队空出来的数组格子如何被重新用上？**
 
-A. 让下标越界  
-B. 让下标走到末尾后能绕回开头，复用空出来的格子  
-C. 让下标加两次  
-D. 防止整数溢出
+A. 不用上，直接浪费\
+B. 靠 `(下标 + 1) % MAX` 让下标绕回开头\
+C. 每次出队后把后面的数据往前挪\
+D. 每次出队后重新 malloc 整个数组
 
 ---
 
-**4. 对一棵二叉查找树（BST）做中序遍历，输出是：**
+**3. 对二叉查找树做中序遍历，输出是？**
 
-A. 从大到小  
-B. 先根后左右  
-C. 从小到大  
+A. 从大到小\
+B. 先根后左右\
+C. 从小到大\
 D. 随机顺序
 
 ---
 
-**5. 二叉查找树插入新节点时，如果 value 比当前节点小，应该：**
+**4. BST 里删除一个有两个孩子的节点，本书用哪个节点当替身？**
 
-A. 往左子树走  
-B. 往右子树走  
-C. 直接替换当前节点  
-D. 放弃插入
-
----
-
-## 二、填空题（共5题）
-
-**6. 栈的核心操作是_______（压入）和_______（弹出）；队列的核心操作是_______（入队）和_______（出队）。**
-
-**7. 朴素数组队列出队几次后，前面的格子就_______了；循环队列用取模 `%` 让下标可以绕回开头。**
-
-**8. 二叉树节点通常由数据 `data` 和两个指针成员_______、_______组成；没有孩子的节点叫_______。**
-
-**9. 三种遍历里，顺序为"左 根 右"的是_______遍历；顺序为"根 左 右"的是_______遍历。**
-
-**10. 二叉查找树遵守"左_______右_______"的规则，所以它的中序遍历会输出升序。**
+A. 左孩子\
+B. 右孩子\
+C. 右子树里最小的节点\
+D. 随机选一个叶子
 
 ---
 
-## 三、改错题（共1题）
+**5. 释放整棵二叉树应该按什么顺序 free？**
 
-**11. 以下二叉查找树的查找函数有 3 个错误：**
+A. 先 free 根，再 free 两个孩子\
+B. 先把左右子树都释放光，最后 free 根\
+C. 随便什么顺序，结果一样\
+D. 只 free 根，孩子自动跟着释放
+
+---
+
+## 二、填空题（每题 4 分，共 20 分）
+
+**6. 栈只在_______位置进出；队列从队尾进、从_______出。**
+
+**7. 空栈的 `top` 是_______；循环队列只靠 `head` 和 `tail` 分不清空和满，所以要额外记录_______。**
+
+**8. 二叉树节点除数据外有_______和_______两个指针成员；两个指针都是 NULL 的节点叫_______。**
+
+**9. 三种遍历里，"左 → 根 → 右"是_______遍历；"左 → 右 → 根"是_______遍历。**
+
+**10. BST 的递归插入中，`root->left = insert(root->left, value);` 的作用是把插入后的子树根_______回去。**
+
+---
+
+## 三、阅读程序（每题 5 分，共 10 分）
+
+**11. 写出下面程序的输出。**
 
 ```c
 #include <stdio.h>
+#include <stdbool.h>
 
-typedef struct TreeNode {
-    int data;
-    struct TreeNode *left;
-    struct TreeNode *right;
-} TreeNode;
+#define MAX 4
 
-TreeNode *search(TreeNode *root, int value) {
-    if (value == root->data) return root;     // 错误区①：root 是 NULL 时能访问 root->data 吗？
-    if (value < root->data) {
-        return search(root->right, value);    // 错误区②：比根小应该去哪一边？
-    }
-    if (value > root->data) {
-        return search(root->left, value);     // 错误区③：比根大应该去哪一边？
-    }
-    return NULL;
-}
-```
+int main(void)
+{
+	int data[MAX];
+	int top = -1;
 
-> 提示：递归到空位时 root 会是 NULL，第一行就访问 root->data 会崩溃——应先判断 root == NULL 返回 NULL；左右两个方向也写反了。
+	for (int i = 1; i <= 4; i++) {
+		if (top < MAX - 1) {
+			top++;
+			data[top] = i * i;
+		}
+	}
 
----
+	int value;
+	while (top >= 0) {
+		value = data[top];
+		top--;
+		printf("%d ", value);
+	}
+	printf("\n");
 
-## 四、编程题（共3题）
-
-### 12. 基础题：数组版栈
-
-> 用一个数组 + 一个 `top` 变量实现简单栈：依次压入 1、2、3、4、5，再全部弹出打印：
-> 
-> ```
-> 弹出：5
-> 弹出：4
-> 弹出：3
-> 弹出：2
-> 弹出：1
-> ```
-
----
-
-### 13. 进阶题：BST 插入 + 中序遍历
-
-> 把 `{7, 3, 9, 1, 5}` 依次插入二叉查找树，再中序遍历打印：
-> 
-> ```
-> 中序遍历：1 3 5 7 9
-> ```
-> 要求：实现 `createNode`、`insert`、`inorder`、`freeTree`。
-
----
-
-### 14. 挑战题：BST 查找（返回 0/1）
-
-> 实现 `int contains(TreeNode *root, int value)`（找到返回 1，找不到返回 0）。
-> 对第 13 题那棵树：
-> 
-> ```
-> 查找 5：找到了（1）
-> 查找 99：没找到（0）
-> ```
-
----
-
-## ✅ 参考答案
-
-<details>
-<summary>🔑 点击展开答案</summary>
-
-### 选择题答案
-
-**1. B** — 栈后进先出（叠盘子），队列先进先出（排队），这是两者最本质的区别。
-
-**2. A** — 队列入队 1、2、3 后，队头是 1，dequeue 取走的是 1（先进先出）。
-
-**3. B** — `% MAX` 让下标在 0..MAX-1 间循环，出队空出的格子能被后面入队复用。
-
-**4. C** — BST 左子树都比根小、右子树都比根大，中序"左 根 右"自然输出升序。
-
-**5. A** — 比当前节点小 → 往左走；大 → 往右走；直到 NULL 空位放下新节点。
-
----
-
-### 填空题答案
-
-**6.** push；pop；enqueue（入队）；dequeue（出队）
-
-**7.** 浪费（用不上）；绕（转）圈
-
-**8.** left；right；叶子（leaf）
-
-**9.** 中序；前序
-
-**10.** 小；大
-
----
-
-### 改错题答案
-
-**11. 三处错误：**
-
-```c
-TreeNode *search(TreeNode *root, int value) {
-    if (root == NULL) return NULL;             // 错误1：先判断空树/走到空位，返回 NULL
-    if (value == root->data) return root;      // 找到了
-    if (value < root->data) {
-        return search(root->left, value);      // 错误2：比根小 → 去左边
-    }
-    return search(root->right, value);         // 错误3：比根大 → 去右边
-}
-```
-
-> 原代码没有 `root == NULL` 的出口，递归到空时会访问 `NULL->data` 崩溃；并且左右方向写反。
-
----
-
-### 编程题参考答案
-
-**12. 数组版栈：**
-
-```c
-#include <stdio.h>
-
-#define MAX 10
-
-int stack[MAX];
-int top = -1;               // 空栈 top = -1
-
-void push(int value) {
-    stack[++top] = value;   // top 先 +1，再放值
-}
-
-int pop() {
-    return stack[top--];    // 取走栈顶，top -1
-}
-
-int main() {
-    for (int i = 1; i <= 5; i++) {
-        push(i);
-    }
-    while (top != -1) {
-        printf("弹出：%d\n", pop());
-    }
-    return 0;
+	return 0;
 }
 ```
 
 ---
 
-**13. BST 插入 + 中序遍历：**
+**12. 下面的程序想建一棵 BST 并中序输出，有两处错误，请指出并改正。**
 
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct TreeNode {
-    int data;
-    struct TreeNode *left;
-    struct TreeNode *right;
-} TreeNode;
+struct tree_node {
+	int data;
+	struct tree_node *left;
+	struct tree_node *right;
+};
 
-TreeNode *createNode(int value) {
-    TreeNode *node = (TreeNode *)malloc(sizeof(TreeNode));
-    if (node == NULL) return NULL;
-    node->data = value;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
+struct tree_node *create_node(int value)
+{
+	struct tree_node *node = malloc(sizeof(struct tree_node));
+	if (node == NULL) {
+		return NULL;
+	}
+	node->data = value;
+	node->left = NULL;
+	node->right = NULL;
+	return node;
 }
 
-TreeNode *insert(TreeNode *root, int value) {
-    if (root == NULL) return createNode(value);
-    if (value < root->data) {
-        root->left = insert(root->left, value);
-    } else if (value > root->data) {
-        root->right = insert(root->right, value);
-    }
-    return root;
+struct tree_node *insert(struct tree_node *root, int value)
+{
+	if (root == NULL) {
+		return create_node(value);
+	}
+	if (value < root->data) {
+		insert(root->left, value);
+	} else if (value > root->data) {
+		root->right = insert(root->right, value);
+	}
+	return root;
 }
 
-void inorder(TreeNode *root) {
-    if (root == NULL) return;
-    inorder(root->left);
-    printf("%d ", root->data);
-    inorder(root->right);
+void inorder(const struct tree_node *root)
+{
+	if (root == NULL) {
+		return;
+	}
+	printf("%d ", root->data);
+	inorder(root->left);
+	inorder(root->right);
 }
 
-void freeTree(TreeNode *root) {
-    if (root == NULL) return;
-    freeTree(root->left);
-    freeTree(root->right);
-    free(root);
-}
+int main(void)
+{
+	struct tree_node *root = NULL;
 
-int main() {
-    TreeNode *root = NULL;
-    int values[] = {7, 3, 9, 1, 5};
-    for (int i = 0; i < 5; i++) {
-        root = insert(root, values[i]);
-    }
-    printf("中序遍历：");
-    inorder(root);
-    printf("\n");
-    freeTree(root);
-    return 0;
+	int values[] = {5, 3, 8};
+	for (int i = 0; i < 3; i++) {
+		root = insert(root, values[i]);
+	}
+
+	inorder(root);
+	printf("\n");
+
+	return 0;
 }
 ```
 
 ---
 
-**14. BST 查找（返回 0/1）：**
+## 四、编程题（每题 10 分，共 20 分）
+
+**13. 数组版栈与括号检查**
+
+编写程序：实现一个字符栈（数组 + `top`），用它检查一行字符串里的圆括号是否配对。对 `"(a+b)*(c-d)"` 输出 `配对正确`，对 `"((a+b)"` 输出 `配对错误`。运行效果：
+
+```text
+(a+b)*(c-d) ：配对正确
+((a+b)      ：配对错误
+```
+
+要求：
+
+- 遇到 `(` 压栈，遇到 `)` 弹栈；弹不出即右括号没人配，读完后栈不空即左括号没配完。
+- 判空、判满都要检查，函数不打印错误信息，用返回值报告。
+- 使用 `int main(void)`。
+
+---
+
+**14. BST 插入、查找、删除**
+
+编写程序：依次把 `{50, 30, 70, 20, 40, 60, 80}` 插入 BST，中序输出；查找 60 和 99 各一次；删除 20、50 各一次，每次删除后中序输出。运行效果：
+
+```text
+中序遍历：20 30 40 50 60 70 80
+查找 60：找到
+查找 99：没找到
+删除 20 后：30 40 50 60 70 80
+删除 50 后：30 40 60 70 80
+```
+
+要求：
+
+- 删除用"返回新子树根"的方案，双子情况用右子树最小节点当替身。
+- 程序结束前释放整棵树（后序）。
+- 使用 `int main(void)`。
+
+---
+
+## 参考答案
+
+<details>
+<summary>点击展开答案</summary>
+
+### 一、选择题
+
+1. **B**。栈后进先出（盘子架），队列先进先出（排队），这是两者的定义性差别，和底层用什么实现无关。
+2. **B**。取余让下标在 0 到 MAX-1 之间循环，出队空出的格子会被绕回来的入队重新写入。
+3. **C**。左子树全比根小、右子树全比根大，中序"左根右"自然升序。
+4. **C**。右子树最小节点（后继）比左子树都大、比右子树其余值都小，顶上后家规两头都成立。
+5. **B**。这是后序顺序；先 free 根就再也够不着孩子了。
+
+### 二、填空题
+
+6. 栈顶；队头。
+7. -1；`size`（当前数据个数）。
+8. `left`；`right`；叶子。
+9. 中序；后序。
+10. 接（接回）。
+
+### 三、阅读程序
+
+11. 输出：
+
+```text
+16 9 4 1
+```
+
+压栈的是 `i * i`，即 1、4、9、16；弹栈从 `top` 往下取，最后压入的 16 先出。注意循环里 `top < MAX - 1` 的判满检查：四个数恰好都装下了。
+
+12. 两处错误：
+
+- `insert` 的左分支缺少接回动作：`insert(root->left, value);` 应为 `root->left = insert(root->left, value);`。不接回去，插到左边的新节点没人指向，树里根本找不到它。
+- `inorder` 把 `printf` 放在了两次递归之前，输出的是前序 `5 3 8`（碰巧和输入顺序一样，容易误以为对）。中序应先递归左子树，再打印，再递归右子树。
+
+### 四、编程题
+
+13. 参考代码：
 
 ```c
-int contains(TreeNode *root, int value) {
-    if (root == NULL) return 0;              // 走到空：没找到
-    if (value == root->data) return 1;       // 找到了
-    if (value < root->data) {
-        return contains(root->left, value);  // 去左边
-    }
-    return contains(root->right, value);     // 去右边
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+#define MAX 64
+
+struct bracket_stack {
+	char data[MAX];
+	int top;
+};
+
+void init(struct bracket_stack *s)
+{
+	s->top = -1;
 }
 
-// main 中用第13题的建树代码：
-// int main() { ... 建树 root ...
-//     printf("查找 5：%s\n", contains(root, 5) ? "找到了（1）" : "没找到（0）");
-//     printf("查找 99：%s\n", contains(root, 99) ? "找到了（1）" : "没找到（0）");
-//     freeTree(root); return 0; }
+bool push(struct bracket_stack *s, char ch)
+{
+	if (s->top == MAX - 1) {
+		return false;
+	}
+	s->top++;
+	s->data[s->top] = ch;
+	return true;
+}
+
+bool pop(struct bracket_stack *s, char *ch)
+{
+	if (s->top == -1) {
+		return false;
+	}
+	*ch = s->data[s->top];
+	s->top--;
+	return true;
+}
+
+bool is_balanced(const char str[])
+{
+	struct bracket_stack s;
+
+	init(&s);
+
+	for (int i = 0; str[i] != '\0'; i++) {
+		if (str[i] == '(') {
+			if (!push(&s, '(')) {
+				return false;
+			}
+		} else if (str[i] == ')') {
+			char ch;
+			if (!pop(&s, &ch)) {
+				return false;
+			}
+		}
+	}
+
+	return s.top == -1;
+}
+
+int main(void)
+{
+	const char *lines[] = {"(a+b)*(c-d)", "((a+b)"};
+
+	for (int i = 0; i < 2; i++) {
+		printf("%-12s：%s\n", lines[i],
+		       is_balanced(lines[i]) ? "配对正确" : "配对错误");
+	}
+
+	return 0;
+}
 ```
+
+输出：
+
+```text
+(a+b)*(c-d) ：配对正确
+((a+b)      ：配对错误
+```
+
+读完后栈不空说明还有 `(` 没等到配对，`s.top == -1` 才是"配对正确"。
+
+14. 参考代码：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct tree_node {
+	int data;
+	struct tree_node *left;
+	struct tree_node *right;
+};
+
+struct tree_node *create_node(int value)
+{
+	struct tree_node *node = malloc(sizeof(struct tree_node));
+	if (node == NULL) {
+		return NULL;
+	}
+	node->data = value;
+	node->left = NULL;
+	node->right = NULL;
+	return node;
+}
+
+struct tree_node *insert(struct tree_node *root, int value)
+{
+	if (root == NULL) {
+		return create_node(value);
+	}
+	if (value < root->data) {
+		root->left = insert(root->left, value);
+	} else if (value > root->data) {
+		root->right = insert(root->right, value);
+	}
+	return root;
+}
+
+struct tree_node *search(struct tree_node *root, int value)
+{
+	if (root == NULL) {
+		return NULL;
+	}
+	if (value == root->data) {
+		return root;
+	}
+	if (value < root->data) {
+		return search(root->left, value);
+	}
+	return search(root->right, value);
+}
+
+struct tree_node *find_min(struct tree_node *root)
+{
+	while (root->left != NULL) {
+		root = root->left;
+	}
+	return root;
+}
+
+struct tree_node *delete_node(struct tree_node *root, int value)
+{
+	if (root == NULL) {
+		return NULL;
+	}
+
+	if (value < root->data) {
+		root->left = delete_node(root->left, value);
+	} else if (value > root->data) {
+		root->right = delete_node(root->right, value);
+	} else {
+		if (root->left == NULL && root->right == NULL) {
+			free(root);
+			return NULL;
+		} else if (root->left == NULL) {
+			struct tree_node *child = root->right;
+			free(root);
+			return child;
+		} else if (root->right == NULL) {
+			struct tree_node *child = root->left;
+			free(root);
+			return child;
+		} else {
+			struct tree_node *successor = find_min(root->right);
+			root->data = successor->data;
+			root->right = delete_node(root->right, successor->data);
+		}
+	}
+
+	return root;
+}
+
+void inorder(const struct tree_node *root)
+{
+	if (root == NULL) {
+		return;
+	}
+	inorder(root->left);
+	printf("%d ", root->data);
+	inorder(root->right);
+}
+
+void free_tree(struct tree_node *root)
+{
+	if (root == NULL) {
+		return;
+	}
+	free_tree(root->left);
+	free_tree(root->right);
+	free(root);
+}
+
+int main(void)
+{
+	struct tree_node *root = NULL;
+
+	int values[] = {50, 30, 70, 20, 40, 60, 80};
+	for (int i = 0; i < 7; i++) {
+		root = insert(root, values[i]);
+	}
+
+	printf("中序遍历：");
+	inorder(root);
+	printf("\n");
+
+	printf("查找 60：%s\n", search(root, 60) != NULL ? "找到" : "没找到");
+	printf("查找 99：%s\n", search(root, 99) != NULL ? "找到" : "没找到");
+
+	root = delete_node(root, 20);
+	printf("删除 20 后：");
+	inorder(root);
+	printf("\n");
+
+	root = delete_node(root, 50);
+	printf("删除 50 后：");
+	inorder(root);
+	printf("\n");
+
+	free_tree(root);
+	root = NULL;
+
+	return 0;
+}
+```
+
+输出：
+
+```text
+中序遍历：20 30 40 50 60 70 80
+查找 60：找到
+查找 99：没找到
+删除 20 后：30 40 50 60 70 80
+删除 50 后：30 40 60 70 80
+```
+
+删 50 命中"双子"情况，替身是右子树 `{60, 70, 80}` 里最小的 60；抄值后再从右子树里删掉原 60（叶子，落回情况一）。
 
 </details>
 
 ---
 
-> 🎉 **第9章测试完成！**
-> 
-> 如果答对了80%以上，说明栈、队列与二叉树你已经真正入门了！
-> 
-> 如果有不会的，回去复习对应的章节吧。
-> 
-> [← 回到第9章](../README.md)
+[返回第 9 章导读](../README.md)

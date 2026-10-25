@@ -33,7 +33,7 @@ make -C examples clean
 
 ## 示例总览
 
-共 **167** 个示例，分布在 **8** 个章节。
+共 **203** 个示例，分布在 **10** 个章节。
 
 | 章节 | 示例数 |
 |------|--------|
@@ -45,6 +45,8 @@ make -C examples clean
 | 第 6 章：动态内存与链表 | 11 |
 | 第 7 章：递归 | 17 |
 | 第 8 章：排序与查找 | 11 |
+| 第 9 章：数据结构入门 | 12 |
+| 第 10 章：C 语言收官 | 24 |
 
 ## 第 1 章：认识 C 语言
 
@@ -252,6 +254,52 @@ make -C examples clean
 | [8.5.1_partition.c](chapter8/8.5.1_partition.c) | 8.5.1 | [8.5.2 一趟分区：Lomuto 写法](<../chapter8/sections/8.5 综合项目：快速排序.md>) |
 | [8.5.2_quick_sort.c](chapter8/8.5.2_quick_sort.c) | 8.5.2 | [8.5.3 加上递归，快排完成](<../chapter8/sections/8.5 综合项目：快速排序.md>) |
 | [8.5.3_score_system.c](chapter8/8.5.3_score_system.c) | 8.5.3 | [8.5.6 综合项目：成绩排序加查找小系统](<../chapter8/sections/8.5 综合项目：快速排序.md>) |
+
+## 第 9 章：数据结构入门
+
+| 文件 | 编号 | 出处 |
+|------|------|------|
+| [9.1.1_stack_basic.c](chapter9/9.1.1_stack_basic.c) | 9.1.1 | [9.1.2 用数组实现栈](<../chapter9/sections/9.1 栈.md>) |
+| [9.1.2_stack_trace.c](chapter9/9.1.2_stack_trace.c) | 9.1.2 | [9.1.3 慢镜头：top 怎么走](<../chapter9/sections/9.1 栈.md>) |
+| [9.1.3_bracket_check.c](chapter9/9.1.3_bracket_check.c) | 9.1.3 | [9.1.4 应用：括号匹配检查器](<../chapter9/sections/9.1 栈.md>) |
+| [9.2.1_circular_queue.c](chapter9/9.2.1_circular_queue.c) | 9.2.1 | [9.2.3 循环队列：让数组首尾相接](<../chapter9/sections/9.2 队列.md>) |
+| [9.2.2_print_queue.c](chapter9/9.2.2_print_queue.c) | 9.2.2 | [9.2.5 应用：模拟打印队列](<../chapter9/sections/9.2 队列.md>) |
+| [9.3.1_build_tree.c](chapter9/9.3.1_build_tree.c) | 9.3.1 | [9.3.3 造一棵树：先手动接线](<../chapter9/sections/9.3 二叉树.md>) |
+| [9.3.2_traversals.c](chapter9/9.3.2_traversals.c) | 9.3.2 | [9.3.4 三种遍历](<../chapter9/sections/9.3 二叉树.md>) |
+| [9.3.3_tree_tools.c](chapter9/9.3.3_tree_tools.c) | 9.3.3 | [9.3.5 递归小工具：计数、深度、释放](<../chapter9/sections/9.3 二叉树.md>) |
+| [9.4.1_bst_insert.c](chapter9/9.4.1_bst_insert.c) | 9.4.1 | [9.4.2 插入：一路走到空位](<../chapter9/sections/9.4 二叉查找树项目.md>) |
+| [9.4.2_bst_project.c](chapter9/9.4.2_bst_project.c) | 9.4.2 | [9.4.4 完整项目：一棵会排序、会查找的树](<../chapter9/sections/9.4 二叉查找树项目.md>) |
+| [9.5.1_bst_delete.c](chapter9/9.5.1_bst_delete.c) | 9.5.1 | [9.5.5 完整实现：一个函数吃下三种情况](<../chapter9/sections/9.5 BST 的删除.md>) |
+| [9.5.2_bst_delete_demo.c](chapter9/9.5.2_bst_delete_demo.c) | 9.5.2 | [9.5.6 一次删完三种情况的演示](<../chapter9/sections/9.5 BST 的删除.md>) |
+
+## 第 10 章：C 语言收官
+
+| 文件 | 编号 | 出处 |
+|------|------|------|
+| [10.1.1_include_macro.c](chapter10/10.1.1_include_macro.c) | 10.1.1 | [10.1.2 常量宏：编译前就替换掉的文本](<../chapter10/sections/10.1 预处理与宏.md>) |
+| [10.1.2_macro_vs_const.c](chapter10/10.1.2_macro_vs_const.c) | 10.1.2 | [10.1.3 常量宏还是 const](<../chapter10/sections/10.1 预处理与宏.md>) |
+| [10.1.3_square_macro.c](chapter10/10.1.3_square_macro.c) | 10.1.3 | [10.1.4 带参宏：披着函数外衣的文本替换](<../chapter10/sections/10.1 预处理与宏.md>) |
+| [10.1.4_square_side_effect.c](chapter10/10.1.4_square_side_effect.c) | 10.1.4 | [10.1.4 带参宏：披着函数外衣的文本替换](<../chapter10/sections/10.1 预处理与宏.md>) |
+| [10.1.5_debug_switch.c](chapter10/10.1.5_debug_switch.c) | 10.1.5 | [10.1.5 多行宏与 do-while(0)](<../chapter10/sections/10.1 预处理与宏.md>) |
+| [10.2.1_binary_basics.c](chapter10/10.2.1_binary_basics.c) | 10.2.1 | [10.2.1 二进制速成：把数摊开成位](<../chapter10/sections/10.2 位运算.md>) |
+| [10.2.2_six_operators.c](chapter10/10.2.2_six_operators.c) | 10.2.2 | [10.2.2 六个位运算符](<../chapter10/sections/10.2 位运算.md>) |
+| [10.2.3_shift_rules.c](chapter10/10.2.3_shift_rules.c) | 10.2.3 | [10.2.3 移位：左移翻倍，右移减半（有前提）](<../chapter10/sections/10.2 位运算.md>) |
+| [10.2.4_permission_flags.c](chapter10/10.2.4_permission_flags.c) | 10.2.4 | [10.2.4 掩码：一个 int 管 32 个开关](<../chapter10/sections/10.2 位运算.md>) |
+| [10.2.5_bitmask_check.c](chapter10/10.2.5_bitmask_check.c) | 10.2.5 | [10.2.4 掩码：一个 int 管 32 个开关](<../chapter10/sections/10.2 位运算.md>) |
+| [10.3.1_first_function_pointer.c](chapter10/10.3.1_first_function_pointer.c) | 10.3.1 | [10.3.1 声明、赋值、调用](<../chapter10/sections/10.3 函数指针.md>) |
+| [10.3.2_op_table.c](chapter10/10.3.2_op_table.c) | 10.3.2 | [10.3.2 函数指针数组：按下标选函数](<../chapter10/sections/10.3 函数指针.md>) |
+| [10.3.3_apply_to_array.c](chapter10/10.3.3_apply_to_array.c) | 10.3.3 | [10.3.3 把函数当参数传：apply 的雏形](<../chapter10/sections/10.3 函数指针.md>) |
+| [10.3.4_menu_demo.c](chapter10/10.3.4_menu_demo.c) | 10.3.4 | [10.3.4 函数指针数组做菜单分发](<../chapter10/sections/10.3 函数指针.md>) |
+| [10.4.1_qsort_int.c](chapter10/10.4.1_qsort_int.c) | 10.4.1 | [10.4.3 第一个实战：int 数组排序](<../chapter10/sections/10.4 qsort 与比较器.md>) |
+| [10.4.2_qsort_overflow.c](chapter10/10.4.2_qsort_overflow.c) | 10.4.2 | [10.4.2 比较器：三条约定](<../chapter10/sections/10.4 qsort 与比较器.md>) |
+| [10.4.3_qsort_desc_double.c](chapter10/10.4.3_qsort_desc_double.c) | 10.4.3 | [10.4.3 第一个实战：int 数组排序](<../chapter10/sections/10.4 qsort 与比较器.md>) |
+| [10.4.4_qsort_struct.c](chapter10/10.4.4_qsort_struct.c) | 10.4.4 | [10.4.4 给结构体排序](<../chapter10/sections/10.4 qsort 与比较器.md>) |
+| [10.4.5_qsort_two_keys.c](chapter10/10.4.5_qsort_two_keys.c) | 10.4.5 | [10.4.5 多关键字比较：总分相同比语文](<../chapter10/sections/10.4 qsort 与比较器.md>) |
+| [10.5.1_contact_milestone1.c](chapter10/10.5.1_contact_milestone1.c) | 10.5.1 | [10.5.2 里程碑一：添加与显示](<../chapter10/sections/10.5 毕业项目：通讯录.md>) |
+| [10.5.2_contact_milestone2.c](chapter10/10.5.2_contact_milestone2.c) | 10.5.2 | [10.5.3 里程碑二：查找与排序](<../chapter10/sections/10.5 毕业项目：通讯录.md>) |
+| [10.5.3_contact_milestone3.c](chapter10/10.5.3_contact_milestone3.c) | 10.5.3 | [10.5.4 里程碑三：存盘与读盘](<../chapter10/sections/10.5 毕业项目：通讯录.md>) |
+| [10.5.4_contact_menu_demo.c](chapter10/10.5.4_contact_menu_demo.c) | 10.5.4 | [10.5.5 里程碑四：函数指针数组分发菜单](<../chapter10/sections/10.5 毕业项目：通讯录.md>) |
+| [10.5.5_contact_full.c](chapter10/10.5.5_contact_full.c) | 10.5.5 | [10.5.6 完整版：毕业项目](<../chapter10/sections/10.5 毕业项目：通讯录.md>) |
 
 ---
 

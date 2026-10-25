@@ -3,3 +3,4 @@
 #
 # 示例：
 # chapter5/5.2.1_read_file.c
+chapter10/10.5.5_contact_full.c
