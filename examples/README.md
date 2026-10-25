@@ -33,12 +33,12 @@ make -C examples clean
 
 ## 示例总览
 
-共 **166** 个示例，分布在 **8** 个章节。
+共 **167** 个示例，分布在 **8** 个章节。
 
 | 章节 | 示例数 |
 |------|--------|
 | 第 1 章：认识 C 语言 | 17 |
-| 第 2 章：运算符、条件、循环与函数 | 38 |
+| 第 2 章：运算符、条件、循环与函数 | 39 |
 | 第 3 章：数组与字符串 | 33 |
 | 第 4 章：指针与结构体 | 25 |
 | 第 5 章：文件读写与实战 | 14 |
@@ -78,9 +78,10 @@ make -C examples clean
 | [2.1.4_increment.c](chapter2/2.1.4_increment.c) | 2.1.4 | [2.1.4 自增和自减](<../chapter2/sections/2.1 运算符.md>) |
 | [2.1.5_compare.c](chapter2/2.1.5_compare.c) | 2.1.5 | [2.1.5 比较运算符](<../chapter2/sections/2.1 运算符.md>) |
 | [2.1.6_logical.c](chapter2/2.1.6_logical.c) | 2.1.6 | [2.1.6 逻辑运算符](<../chapter2/sections/2.1 运算符.md>) |
-| [2.1.7_assignment.c](chapter2/2.1.7_assignment.c) | 2.1.7 | [2.1.7 赋值运算符](<../chapter2/sections/2.1 运算符.md>) |
-| [2.1.8_precedence.c](chapter2/2.1.8_precedence.c) | 2.1.8 | [2.1.8 运算符优先级](<../chapter2/sections/2.1 运算符.md>) |
-| [2.1.9_time_conversion.c](chapter2/2.1.9_time_conversion.c) | 2.1.9 | [2.1.9 综合示例：秒数换算](<../chapter2/sections/2.1 运算符.md>) |
+| [2.1.7_short_circuit.c](chapter2/2.1.7_short_circuit.c) | 2.1.7 | [短路求值](<../chapter2/sections/2.1 运算符.md>) |
+| [2.1.8_assignment.c](chapter2/2.1.8_assignment.c) | 2.1.8 | [2.1.7 赋值运算符](<../chapter2/sections/2.1 运算符.md>) |
+| [2.1.9_precedence.c](chapter2/2.1.9_precedence.c) | 2.1.9 | [2.1.8 运算符优先级](<../chapter2/sections/2.1 运算符.md>) |
+| [2.1.10_time_conversion.c](chapter2/2.1.10_time_conversion.c) | 2.1.10 | [2.1.9 综合示例：秒数换算](<../chapter2/sections/2.1 运算符.md>) |
 | [2.2.1_basic_if.c](chapter2/2.2.1_basic_if.c) | 2.2.1 | [2.2.1 最基本的 if](<../chapter2/sections/2.2 条件判断.md>) |
 | [2.2.2_if_else.c](chapter2/2.2.2_if_else.c) | 2.2.2 | [2.2.2 if-else](<../chapter2/sections/2.2 条件判断.md>) |
 | [2.2.3_grade.c](chapter2/2.2.3_grade.c) | 2.2.3 | [2.2.3 else if：多条件判断](<../chapter2/sections/2.2 条件判断.md>) |
