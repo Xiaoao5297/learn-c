@@ -5,18 +5,19 @@
  * 编译运行：cc -std=c11 -Wall -Wextra -pedantic 3.4.5_snprintf_demo.c -o demo
  *
  * 预期输出：
- *   dst = hello
- *   strlen(dst) = 5
+ *   dst = hi
+ *   strlen(dst) = 2
  *
  * 本文件由 scripts/extract_examples.py 自动生成。
  * 如需修改，请改教程原文后重新生成。
  */
 // 3.4.5 snprintf_demo.c
 #include <stdio.h>
+#include <string.h>
 
 int main(void)
 {
-	char src[] = "hello world";
+	char src[] = "hi";
 	char dst[6];
 
 	snprintf(dst, sizeof(dst), "%s", src);

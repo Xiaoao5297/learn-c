@@ -14,6 +14,7 @@
  */
 // 3.3.4 scanf_width.c
 #include <stdio.h>
+#include <string.h>
 
 int main(void)
 {

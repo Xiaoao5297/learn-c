@@ -1,0 +1,45 @@
+name: 学习疑问（看不懂某处）
+description: 不是错误，而是某处讲得看不懂、想问为什么
+labels: ["疑问"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        看不懂不一定是你的问题，也可能是教程讲得不清楚。
+        这类反馈同样有价值，会帮助我们改进讲解。
+  - type: input
+    id: location
+    attributes:
+      label: 位置
+      description: 哪一章哪一节？例如「第 6 章 / 6.2 内存陷阱」或直接贴链接
+      placeholder: 第 X 章 / X.X 小节
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: 你的疑问
+      description: 卡在哪里？是哪句话、哪个概念没看懂？
+      placeholder: 读到「……」这里，我不明白……
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: 你尝试了什么
+      description: 可选。已经试着做了什么、查了什么，还是没明白
+    validations:
+      required: false
+  - type: dropdown
+    id: stage
+    attributes:
+      label: 你学到哪里了
+      description: 方便判断是不是前置知识没铺垫到
+      options:
+        - 第 0~1 章（刚起步）
+        - 第 2~4 章（语法入门）
+        - 第 5~7 章（进阶）
+        - 第 8~10 章（算法与项目）
+        - 已学完，复习中
+    validations:
+      required: false
