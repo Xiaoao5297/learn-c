@@ -112,6 +112,14 @@ scripts/                示例抽取、输出验证、链接检查等工具
 
 详细规则和工具配置见 [2.6 代码规范](<chapter2/sections/2.6 代码规范.md>)。
 
+## 许可证
+
+教程正文（各章 Markdown 文档）采用 [CC BY-NC-SA 4.0](LICENSE-CC.md) 许可：可自由分享和改编，须署名、不得商用、改编作品以相同许可分享。
+
+代码（`scripts/`、`examples/` 下的源文件与工程配置）采用 [GPL-3.0](LICENSE-GPL.md) 许可。
+
+详见 [许可证说明](LICENSE.md)。
+
 ---
 
 从 [第 0 章：计算机是怎样跑起来的](chapter0/README.md) 开始。

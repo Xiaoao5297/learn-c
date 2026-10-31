@@ -1,0 +1,63 @@
+name: 内容勘误（错误报告）
+description: 报告教程中的错误：讲错的概念、跑不通的示例、输出对不上等
+labels: ["勘误"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！为了让问题尽快定位，请尽量填全下面的信息。
+        如果你不确定是不是错误，也欢迎直接描述你的疑问。
+  - type: dropdown
+    id: type
+    attributes:
+      label: 错误类型
+      options:
+        - 示例代码跑不通 / 编译报错
+        - 示例输出与教程写的不一致
+        - 概念讲解有误
+        - 错别字 / 标点 / 排版
+        - 链接失效
+        - 其他
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: 位置
+      description: 哪一章哪一节？例如「第 3 章 / 3.4 字符串函数 / 3.4.5」或直接贴链接
+      placeholder: 第 X 章 / X.X 小节 / X.X.K 示例
+    validations:
+      required: true
+  - type: textarea
+    id: describe
+    attributes:
+      label: 问题描述
+      description: 教程写的是什么，实际是什么？
+      placeholder: |
+        教程说：……
+        实际运行/实际现象：……
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤（代码类问题必填）
+      description: 你执行的命令、编译参数、输入内容；报错请贴完整报错信息
+      placeholder: |
+        cc -std=c11 xxx.c -o xxx
+        ./xxx
+        （报错信息粘贴在这里）
+    validations:
+      required: false
+  - type: dropdown
+    id: env
+    attributes:
+      label: 你的操作系统
+      options:
+        - Windows（MinGW-w64 / MSYS2）
+        - Windows（其他编译器）
+        - Linux
+        - macOS
+        - 在线环境 / 手机
+    validations:
+      required: true
