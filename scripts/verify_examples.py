@@ -65,6 +65,7 @@ def expected_output(source: Path) -> str:
 
 
 def compile_example(source: Path, binary: Path, compiler: str) -> str | None:
+    extra_cflags = os.environ.get("EXTRA_CFLAGS", "").split()
     command = [
         compiler,
         "-std=c11",
@@ -72,6 +73,7 @@ def compile_example(source: Path, binary: Path, compiler: str) -> str | None:
         "-Wextra",
         "-Werror",
         "-pedantic",
+        *extra_cflags,
         str(source),
         "-o",
         str(binary),

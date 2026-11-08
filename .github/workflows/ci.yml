@@ -25,6 +25,11 @@ jobs:
       - name: Verify example output
         run: python3 scripts/verify_examples.py
 
+      - name: Verify example output with ASan and UBSan
+        run: python3 scripts/verify_examples.py
+        env:
+          EXTRA_CFLAGS: "-fsanitize=address,undefined -fno-sanitize-recover=all"
+
   docs:
     name: Lint docs
     runs-on: ubuntu-latest

@@ -33,14 +33,14 @@ make -C examples clean
 
 ## 示例总览
 
-共 **203** 个示例，分布在 **10** 个章节。
+共 **204** 个示例，分布在 **10** 个章节。
 
 | 章节 | 示例数 |
 |------|--------|
 | 第 1 章：认识 C 语言 | 17 |
 | 第 2 章：运算符、条件、循环与函数 | 39 |
 | 第 3 章：数组与字符串 | 33 |
-| 第 4 章：指针与结构体 | 25 |
+| 第 4 章：指针与结构体 | 26 |
 | 第 5 章：文件读写与实战 | 14 |
 | 第 6 章：动态内存与链表 | 11 |
 | 第 7 章：递归 | 17 |
@@ -172,6 +172,7 @@ make -C examples clean
 | [4.4.2_struct_array.c](chapter4/4.4.2_struct_array.c) | 4.4.2 | [4.4.2 结构体数组](<../chapter4/sections/4.4 结构体.md>) |
 | [4.4.3_struct_nested.c](chapter4/4.4.3_struct_nested.c) | 4.4.3 | [4.4.3 嵌套结构体](<../chapter4/sections/4.4 结构体.md>) |
 | [4.4.4_struct_assign.c](chapter4/4.4.4_struct_assign.c) | 4.4.4 | [4.4.4 结构体赋值：整包复制](<../chapter4/sections/4.4 结构体.md>) |
+| [4.4.5_union_basics.c](chapter4/4.4.5_union_basics.c) | 4.4.5 | [4.4.5 union：成员共用一块内存](<../chapter4/sections/4.4 结构体.md>) |
 | [4.5.1_arrow_operator.c](chapter4/4.5.1_arrow_operator.c) | 4.5.1 | [4.5.1 箭头运算符 -](<../chapter4/sections/4.5 结构体与指针.md>) |
 | [4.5.2_struct_param.c](chapter4/4.5.2_struct_param.c) | 4.5.2 | [4.5.2 函数传结构体：传值还是传指针](<../chapter4/sections/4.5 结构体与指针.md>) |
 | [4.5.3_struct_array_ptr.c](chapter4/4.5.3_struct_array_ptr.c) | 4.5.3 | [4.5.3 用指针遍历结构体数组](<../chapter4/sections/4.5 结构体与指针.md>) |

@@ -105,6 +105,7 @@ def compile_error(code: str, workdir: Path, compiler: str) -> str | None:
     source = workdir / "candidate.c"
     binary = workdir / "candidate"
     source.write_text(code, encoding="utf-8")
+    extra_cflags = os.environ.get("EXTRA_CFLAGS", "").split()
     command = [
         compiler,
         "-std=c11",
@@ -112,6 +113,7 @@ def compile_error(code: str, workdir: Path, compiler: str) -> str | None:
         "-Wextra",
         "-Werror",
         "-pedantic",
+        *extra_cflags,
         str(source),
         "-o",
         str(binary),
