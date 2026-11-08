@@ -16,6 +16,7 @@ examples/verify_skip.txt，一行一个相对路径。被跳过的示例仍然�
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -130,8 +131,13 @@ def main() -> int:
                 failures.append(str(error))
                 continue
 
+            # 每个示例在独立的子目录里运行，避免示例读写文件时互相污染。
+            run_dir = workdir / (source.stem + ".run")
+            run_dir.mkdir()
+            shutil.copy(binary, run_dir / binary.name)
+
             try:
-                result = run_example(binary, read_input(source))
+                result = run_example(run_dir / binary.name, read_input(source))
             except subprocess.TimeoutExpired:
                 failures.append(f"{relative}: 运行超过 3 秒，可能需要输入")
                 continue

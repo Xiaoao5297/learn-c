@@ -297,7 +297,7 @@ def build_index(examples: list[Example]) -> str:
         "---",
         "",
         "示例只保证在 `cc -std=c11 -Wall -Wextra -Werror -pedantic` 下能编译。",
-        "涉及输入或外部文件的程序会在 `examples/verify_skip.txt` 中单独列出。",
+        "涉及输入的程序在 `examples/verify_inputs/` 中配有对应的输入文件，运行输出会与教程逐行核对。",
         "",
     ]
     return "\n".join(lines)
