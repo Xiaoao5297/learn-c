@@ -105,6 +105,7 @@ strncat(dst, src, sizeof(dst) - strlen(dst) - 1);
 | 函数 | 作用 |
 |------|------|
 | `atoi(s)` / `atof(s)` | 字符串 → int / double |
+| `strtol(s, &end, 10)` | 字符串 → long，能通过 `end` 检查是否转换成功 |
 | `rand()` / `srand(seed)` | 随机数 / 随机种子 |
 | `abs(n)` | 整数绝对值 |
 | `malloc(n)` / `calloc(n, sz)` / `realloc(p, n)` | 动态申请内存（第 6.1 节） |
@@ -154,7 +155,115 @@ gcc -o 程序 源文件.c                    # 最快（不推荐日常用）
 
 警告尽量清零。很多运行期 bug 在编译警告里就被“剧透”了。
 
-## 8. gdb 常用命令
+## 8. 命令行参数（argc / argv）
+
+`int main(int argc, char *argv[])` 让程序接住运行时跟在程序名后面的参数：
+
+```bash
+./copy_args 说明.txt 备份.txt
+# argc = 3
+# argv[0] = "./copy_args"
+# argv[1] = "说明.txt"
+# argv[2] = "备份.txt"
+```
+
+| 写法 | 含义 |
+|------|------|
+| `argc` | 参数个数，至少为 1（程序名本身算一个） |
+| `argv[i]` | 第 i 个参数字符串 |
+| `argv[0]` | 程序名，可能是路径，不保证是完整路径 |
+| `argv[argc]` | 按标准一定是 `NULL`，可用来判断结尾 |
+
+把第 5 章的复制程序改成用参数指定文件名：
+
+```c
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+	if (argc != 3) {
+		printf("用法：%s 源文件 目标文件\n", argv[0]);
+		return 1;
+	}
+
+	FILE *in = fopen(argv[1], "r");
+	if (in == NULL) {
+		perror(argv[1]);
+		return 1;
+	}
+
+	FILE *out = fopen(argv[2], "w");
+	if (out == NULL) {
+		perror(argv[2]);
+		fclose(in);
+		return 1;
+	}
+
+	int ch;
+	while ((ch = fgetc(in)) != EOF) {
+		fputc(ch, out);
+	}
+
+	fclose(in);
+	fclose(out);
+
+	return 0;
+}
+```
+
+运行：
+
+```bash
+cc -std=c11 -Wall -Wextra -pedantic copy_args.c -o copy_args
+./copy_args 说明.txt 备份.txt
+```
+
+注意：
+
+- 参数都是字符串。要当数字用，先用 `strtol` 转换并检查；`atoi` 不报错，少用。
+- `perror("文件名")` 会把系统给出的失败原因一起打印出来。
+- 文件名里有空格时要用引号包住：`./copy_args "我的 文件.txt" 备份.txt`。
+
+## 9. 关键字速查：struct / typedef / enum / union / static
+
+| 关键字 | 作用 | 易错点 / 记忆点 | 详见 |
+|--------|------|------------------|------|
+| `struct` | 把多个成员打包成一个类型 | 定义以 `};` 结尾；变量写 `struct 名字` | 4.4 |
+| `typedef` | 给类型起别名 | 别名和原类型是同一种类型；本书默认不用 | 4.4 |
+| `enum` | 一组有名字的整数常量 | 不赋值从 0 递增；位标志要显式写 1、2、4 | 10.2 |
+| `union` | 所有成员共用一块内存 | 大小等于最大成员；同一时刻只存一个成员 | 4.4 |
+| `static`（文件顶层） | 内部链接，只在本文件可见 | 避免多文件同名冲突；对外函数别加 | 4.7 |
+| `static`（函数内） | 局部变量只初始化一次，跨调用保留值 | 作用域仍在函数内；和链接无关 | 4.7 |
+| `extern` | 声明“这个名字在别处定义” | 头文件放声明，一个 `.c` 放定义 | 4.7 |
+| `const` | 只读 | `const int *p` 与 `int *const p` 含义不同 | 4.6 |
+
+```c
+typedef struct student {
+	char name[32];
+	int age;
+} Student;			/* Student 是 struct student 的别名 */
+
+enum color {
+	COLOR_RED,		/* 0 */
+	COLOR_GREEN = 10,	/* 10 */
+	COLOR_BLUE		/* 11 */
+};
+
+union value {
+	int i;
+	double d;		/* 与 i 共用一块内存 */
+};
+
+static int file_local;		/* 只在本文件可见 */
+
+int next_id(void)
+{
+	static int id = 0;	/* 只初始化一次，下次调用接着加 */
+	return ++id;
+}
+```
+
+## 10. gdb 常用命令
 
 用 gdb 前编译要带 `-g`，否则 gdb 不知道“第几行”。Linux 和 macOS 通常自带或随编译工具链安装；Windows 上 MinGW-w64 需要单独安装 gdb（MSYS2 里 `pacman -S gdb`），没有 gdb 时可以用 Visual Studio 的调试器，思路相同。
 
@@ -182,7 +291,7 @@ gcc -o 程序 源文件.c                    # 最快（不推荐日常用）
 
 排查心法：复现 → 定位 → 修复。让 bug 稳定出现（输入固定、数据固定），再逐步缩小范围。
 
-## 9. 常见编译错误 → 去哪查
+## 11. 常见编译错误 → 去哪查
 
 | 报错片段 | 多半是 | 去看 |
 |----------|--------|------|
@@ -194,7 +303,7 @@ gcc -o 程序 源文件.c                    # 最快（不推荐日常用）
 | `redefinition` | 重复定义（含多个 main） | [4.7 多文件工程与 Makefile](<../chapter4/sections/4.7 多文件工程与 Makefile.md>) |
 | `use of undeclared 'strlen'` | 忘 `#include <string.h>` | [3.4 字符串函数](<../chapter3/sections/3.4 字符串函数.md>) |
 
-## 10. 常见运行时 bug → 去哪查
+## 12. 常见运行时 bug → 去哪查
 
 | 症状 | 多半是 | 去看 |
 |------|--------|------|
@@ -207,7 +316,7 @@ gcc -o 程序 源文件.c                    # 最快（不推荐日常用）
 | 程序卡死 | 死循环 / 递归没出口 | [2.3 循环入门](<../chapter2/sections/2.3 循环入门.md>)、[7.1 递归入门](<../chapter7/sections/7.1 递归入门.md>) |
 | 内存泄漏 | `malloc` 了没 `free` | [6.2 内存陷阱](<../chapter6/sections/6.2 内存陷阱.md>) |
 
-## 11. 代码质量自查
+## 13. 代码质量自查
 
 写完一段代码、提交之前，按两张清单过一遍。完整的表格和解释在 [2.6 代码规范](<../chapter2/sections/2.6 代码规范.md>)。
 

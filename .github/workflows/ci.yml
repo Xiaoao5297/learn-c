@@ -30,6 +30,9 @@ jobs:
         env:
           EXTRA_CFLAGS: "-fsanitize=address,undefined -fno-sanitize-recover=all"
 
+      - name: Verify practice solution output
+        run: python3 scripts/verify_solutions.py
+
   docs:
     name: Lint docs
     runs-on: ubuntu-latest
