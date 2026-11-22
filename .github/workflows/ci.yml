@@ -40,6 +40,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check glossary is in sync
+        run: python3 scripts/build_glossary.py --check
+
       - name: Check links
         run: python3 scripts/check_links.py
 

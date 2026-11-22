@@ -11,7 +11,7 @@
 - 各级 `README.md`
 
 除注明出处外，本仓库教程正文由 Xiaoao5297 编写，采用
-[署名-非商业性使用-相同方式共享 4.0 国际](LICENSE-CC.md)（CC BY-NC-SA 4.0）许可。
+[署名-非商业性使用-相同方式共享 4.0 国际](LICENSE-CC)（CC BY-NC-SA 4.0）许可。
 
 简单地说，你可以：
 
@@ -24,7 +24,7 @@
 - **非商业（NC）**——不得将正文用于商业目的
 - **相同方式共享（SA）**——改编后的作品须以同样的 CC BY-NC-SA 4.0 分享
 
-完整法律文本见 [LICENSE-CC.md](LICENSE-CC.md)，或访问
+完整法律文本见 [LICENSE-CC](LICENSE-CC)，或访问
 <https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.txt>。
 
 ## 代码：GPL-3.0
@@ -35,10 +35,10 @@
 - `examples/` 下的 C 示例源文件
 - `.clang-format`、`.editorconfig` 等工程配置
 
-这些代码采用 [GNU 通用公共许可证第 3 版](LICENSE-GPL.md)（GPL-3.0）许可。
+这些代码采用 [GNU 通用公共许可证第 3 版](LICENSE-GPL)（GPL-3.0）许可。
 你可以自由使用、修改、再分发这些代码，但分发时须保持 GPL-3.0 并公开源码。
 
-完整法律文本见 [LICENSE-GPL.md](LICENSE-GPL.md)。
+完整法律文本见 [LICENSE-GPL](LICENSE-GPL)。
 
 ## 为什么分两套
 
